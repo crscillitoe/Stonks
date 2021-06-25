@@ -1,0 +1,9 @@
+syntax = "proto3";
+package trading;
+option go_package = "./trading/tradingpb";
+import "trading/strategy.proto";
+
+message Trade {
+    string Ticker = 1;
+    repeated WeightedTradingStrategy Strategies = 2;
+}
