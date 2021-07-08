@@ -1,33 +1,45 @@
 import { Bar } from "@master-chief/alpaca";
+import { FixedSizeArray } from "fixed-size-array";
+import { OnePlease } from "../The Goods/ProprietaryUnwrapper";
+import { TickerFactory } from "./TickerFactory";
 
 export class Stock {
-  tickerFactory: TickerFactory;
-  bar: Bar;
+  tickerFactory: FixedSizeArray<1, TickerFactory>;
 
-  openPrice: number;
-  highPrice: number;
-  lowPrice: number;
-  closePrice: number;
-  volume: number;
+  openPrice: FixedSizeArray<1, number>;
+  highPrice: FixedSizeArray<1, number>;
+  lowPrice: FixedSizeArray<1, number>;
+  closePrice: FixedSizeArray<1, number>;
+  volume: FixedSizeArray<1, number>;
 
-  constructor(tickerFactory: TickerFactory, bar: Bar) {
+  constructor(
+    tickerFactory: FixedSizeArray<1, TickerFactory>,
+    bar: FixedSizeArray<1, Bar> = [null]
+  ) {
     this.tickerFactory = tickerFactory;
-    this.UpdateBar(bar);
+
+    if (OnePlease(bar)) {
+      this.UpdateBar(bar);
+    }
   }
 
-  UpdateBar(bar: Bar) {
-    this.openPrice = bar.o;
-    this.highPrice = bar.h;
-    this.lowPrice = bar.l;
-    this.closePrice = bar.c;
-    this.volume = bar.v;
+  UpdateBar(bar: FixedSizeArray<1, Bar>) {
+    this.openPrice = [OnePlease(bar).o];
+    this.highPrice = [OnePlease(bar).h];
+    this.lowPrice = [OnePlease(bar).l];
+    this.closePrice = [OnePlease(bar).c];
+    this.volume = [OnePlease(bar).v];
   }
 
   PrintTicker() {
     console.log(
-      this.tickerFactory
-        .HelloTickerFactoryIWouldLikeYouToConstructOneTickerPlease()
-        .ThankYou()
+      OnePlease(
+        OnePlease(
+          OnePlease(
+            this.tickerFactory
+          ).HelloTickerFactoryIWouldLikeYouToConstructOneTickerPlease()
+        ).ThankYouOne()
+      )
     );
   }
 }

@@ -1,4 +1,5 @@
 import { FixedSizeArray } from "fixed-size-array";
+import { OnePlease } from "../The Goods/ProprietaryUnwrapper";
 import { BuyShortStrategyOutcome } from "./BuyShort";
 import { DoNothing } from "./DoNothing";
 
@@ -9,10 +10,14 @@ export interface CloseHodlStrategyOutcome {
 
 export class CloseHodlChecker {
   static isCloseHodl(
-    outcome: CloseHodlStrategyOutcome | BuyShortStrategyOutcome
-  ): outcome is CloseHodlStrategyOutcome {
+    outcome: FixedSizeArray<
+      1,
+      CloseHodlStrategyOutcome | BuyShortStrategyOutcome
+    >
+  ): outcome is FixedSizeArray<1, CloseHodlStrategyOutcome> {
     return (
-      outcome._uuid.slice(0, 1)[0] === "381528e9-ef8a-4c2d-9172-1b91b16c596f"
+      OnePlease(OnePlease(outcome)._uuid) ===
+      "381528e9-ef8a-4c2d-9172-1b91b16c596f"
     );
   }
 }

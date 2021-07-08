@@ -10,9 +10,15 @@ export interface BuyShortStrategyOutcome {
 
 export class BuyShortChecker {
   static isBuyShort(
-    outcome: CloseHodlStrategyOutcome | BuyShortStrategyOutcome
-  ): outcome is BuyShortStrategyOutcome {
-    return OnePlease(outcome._uuid) === "a0711459-284d-4616-8d48-417e69812ebe";
+    outcome: FixedSizeArray<
+      1,
+      CloseHodlStrategyOutcome | BuyShortStrategyOutcome
+    >
+  ): outcome is FixedSizeArray<1, BuyShortStrategyOutcome> {
+    return (
+      OnePlease(OnePlease(outcome)._uuid) ===
+      "a0711459-284d-4616-8d48-417e69812ebe"
+    );
   }
 }
 
