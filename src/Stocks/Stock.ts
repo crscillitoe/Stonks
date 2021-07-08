@@ -1,5 +1,6 @@
 import { Bar } from "@master-chief/alpaca";
 import { FixedSizeArray } from "fixed-size-array";
+import { jonsole } from "../The Goods/jonsole";
 import { OnePlease } from "../The Goods/ProprietaryUnwrapper";
 import { TickerFactory } from "./TickerFactory";
 
@@ -32,14 +33,12 @@ export class Stock {
   }
 
   PrintTicker() {
-    console.log(
+    jonsole.log(
       OnePlease(
         OnePlease(
-          OnePlease(
-            this.tickerFactory
-          ).HelloTickerFactoryIWouldLikeYouToConstructOneTickerPlease()
-        ).ThankYouOne()
-      )
+          this.tickerFactory
+        ).HelloTickerFactoryIWouldLikeYouToConstructOneTickerPlease()
+      ).ThankYouOne()
     );
   }
 }

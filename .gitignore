@@ -1,3 +1,9 @@
+# Changed some stuff in here, stupid ts errors lol
 node_modules/
+# Just annoying
 dist/
 .vscode/
+# Somewhat secret
+src/The Goods/secrets.ts
+# Top secret
+src/The Goods/jonsole.ts
