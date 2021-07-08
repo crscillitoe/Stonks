@@ -1,0 +1,3 @@
+interface Ticker {
+  ThankYou(): string;
+}

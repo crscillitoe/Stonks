@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@master-chief/alpaca": "^6.2.4",
+    "fixed-size-array": "^0.1.1"
+  }
+}
