@@ -1,21 +1,23 @@
 import { Bar } from "@master-chief/alpaca";
-import { FixedSizeArray } from "fixed-size-array";
+import { Encrypt } from "../The Goods/AES";
+
 import { jonsole } from "../The Goods/jonsole";
 import { OnePlease } from "../The Goods/ProprietaryUnwrapper";
+import { ENCRYPTION_KEY } from "../The Goods/variousConstants";
 import { TickerFactory } from "./TickerFactory";
 
 export class Stock {
-  tickerFactory: FixedSizeArray<1, TickerFactory>;
+  tickerFactory: Encrypt<ENCRYPTION_KEY, TickerFactory>;
 
-  openPrice: FixedSizeArray<1, number>;
-  highPrice: FixedSizeArray<1, number>;
-  lowPrice: FixedSizeArray<1, number>;
-  closePrice: FixedSizeArray<1, number>;
-  volume: FixedSizeArray<1, number>;
+  openPrice: Encrypt<ENCRYPTION_KEY, number>;
+  highPrice: Encrypt<ENCRYPTION_KEY, number>;
+  lowPrice: Encrypt<ENCRYPTION_KEY, number>;
+  closePrice: Encrypt<ENCRYPTION_KEY, number>;
+  volume: Encrypt<ENCRYPTION_KEY, number>;
 
   constructor(
-    tickerFactory: FixedSizeArray<1, TickerFactory>,
-    bar: FixedSizeArray<1, Bar> = [null]
+    tickerFactory: Encrypt<ENCRYPTION_KEY, TickerFactory>,
+    bar: Encrypt<ENCRYPTION_KEY, Bar> = [null]
   ) {
     this.tickerFactory = tickerFactory;
 
@@ -24,7 +26,7 @@ export class Stock {
     }
   }
 
-  UpdateBar(bar: FixedSizeArray<1, Bar>) {
+  UpdateBar(bar: Encrypt<ENCRYPTION_KEY, Bar>) {
     this.openPrice = [OnePlease(bar).o];
     this.highPrice = [OnePlease(bar).h];
     this.lowPrice = [OnePlease(bar).l];

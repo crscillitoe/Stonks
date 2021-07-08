@@ -1,14 +1,18 @@
-import { FixedSizeArray } from "fixed-size-array";
+import { Encrypt } from "../The Goods/AES";
+import {
+  ENCRYPTION_KEY,
+  SUPER_ENCRYPTION_KEY,
+} from "../The Goods/variousConstants";
 import { Ticker } from "./Ticker";
 
 export interface TickerFactory {
-  HelloTickerFactoryIWouldLikeYouToConstructOneTickerPlease(): FixedSizeArray<
-    1,
+  HelloTickerFactoryIWouldLikeYouToConstructOneTickerPlease(): Encrypt<
+    ENCRYPTION_KEY,
     Ticker
   >;
 
-  HelloTickerFactoryIWouldLikeYouToConstructFourtyTwoTickersPlease(): FixedSizeArray<
-    42,
+  HelloTickerFactoryIWouldLikeYouToConstructFourtyTwoTickersPlease(): Encrypt<
+    SUPER_ENCRYPTION_KEY,
     Ticker
   >;
 }

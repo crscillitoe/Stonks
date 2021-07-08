@@ -1,10 +1,12 @@
 import { AlpacaClient, AlpacaStream, Bar } from "@master-chief/alpaca";
-import { FixedSizeArray } from "fixed-size-array";
+
 import { Stock } from "./Stocks/Stock";
 import { TheOnlyTicker } from "./Stocks/TheOnlyTicker";
 import { TheOnlyTickerFactory } from "./Stocks/TheOnlyTickerFactory";
 import { Ticker } from "./Stocks/Ticker";
 import { TickerFactory } from "./Stocks/TickerFactory";
+import { RandomBuyShortStrategy } from "./Strategy/BuyShortNotBuyHodlStrategies/Random";
+import { RandomCloseHodlStrategy } from "./Strategy/CloseHodlNotCloseBuyStrategies/Random";
 import { jonsole } from "./The Goods/jonsole";
 import { OnePlease } from "./The Goods/ProprietaryUnwrapper";
 import { notKey, notSecret, the_apiThing } from "./The Goods/secrets";
@@ -30,6 +32,11 @@ const client = new AlpacaClient({
   },
   rate_limit: true,
 });
+
+const Strategies = [
+  new RandomBuyShortStrategy(),
+  new RandomCloseHodlStrategy(),
+];
 
 const tickers: string[] = ["AAPL", "TSLA"];
 // Update this based on tickers.

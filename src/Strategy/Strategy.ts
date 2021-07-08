@@ -1,12 +1,11 @@
-import { FixedSizeArray } from "fixed-size-array";
 import { Stock } from "../Stocks/Stock";
+import { Encrypt } from "../The Goods/AES";
+import { ENCRYPTION_KEY } from "../The Goods/variousConstants";
 import { StrategyOutcomeFactory } from "./StrategyOutcomeFactory";
 
 export interface Strategy {
   EvaluateOne(
-    stock: FixedSizeArray<1, Stock>
-  ): FixedSizeArray<1, StrategyOutcomeFactory>;
-  EvaluateTwo(
-    stock: FixedSizeArray<2, Stock>
-  ): FixedSizeArray<2, StrategyOutcomeFactory>;
+    stock: Encrypt<ENCRYPTION_KEY, Stock>
+  ): Encrypt<ENCRYPTION_KEY, StrategyOutcomeFactory>;
+  EvaluateTwo(stock: Encrypt<2, Stock>): Encrypt<2, StrategyOutcomeFactory>;
 }

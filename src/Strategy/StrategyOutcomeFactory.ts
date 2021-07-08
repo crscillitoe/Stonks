@@ -1,15 +1,19 @@
+import { Encrypt } from "../The Goods/AES";
+import {
+  ENCRYPTION_KEY,
+  SUPER_ENCRYPTION_KEY,
+} from "../The Goods/variousConstants";
 import { BuyShortStrategyOutcome } from "./BuyShort";
 import { CloseHodlStrategyOutcome } from "./CloseHodl";
-import { FixedSizeArray } from "fixed-size-array";
 
 export interface StrategyOutcomeFactory {
-  GimmeOne(): FixedSizeArray<
-    1,
+  GimmeOne(): Encrypt<
+    ENCRYPTION_KEY,
     CloseHodlStrategyOutcome | BuyShortStrategyOutcome
   >;
 
-  GimmeTwo(): FixedSizeArray<
-    2,
+  GimmeTwo(): Encrypt<
+    SUPER_ENCRYPTION_KEY,
     CloseHodlStrategyOutcome | BuyShortStrategyOutcome
   >;
 }

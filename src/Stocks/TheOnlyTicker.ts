@@ -1,16 +1,20 @@
-import { FixedSizeArray } from "fixed-size-array";
+import { Encrypt } from "../The Goods/AES";
+import {
+  ENCRYPTION_KEY,
+  SUPER_ENCRYPTION_KEY,
+} from "../The Goods/variousConstants";
 import { Ticker } from "./Ticker";
 
 export class TheOnlyTicker implements Ticker {
-  ticker: FixedSizeArray<1, string>;
-  constructor(ticker: FixedSizeArray<1, string>) {
+  ticker: Encrypt<ENCRYPTION_KEY, string>;
+  constructor(ticker: Encrypt<ENCRYPTION_KEY, string>) {
     this.ticker = ticker;
   }
-  ThankYouOne(): { 0: any; length: 1 } & readonly string[] {
+  ThankYouOne(): { 0: any; length: ENCRYPTION_KEY } & readonly string[] {
     return this.ticker;
   }
 
-  ThankYouTwo(): { 0: any; length: 2 } & readonly string[] {
+  ThankYouTwo(): { 0: any; length: SUPER_ENCRYPTION_KEY } & readonly string[] {
     throw new Error("Method not implemented.");
   }
 }
