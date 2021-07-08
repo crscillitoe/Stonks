@@ -4,6 +4,4 @@ node_modules/
 dist/
 .vscode/
 # Somewhat secret
-src/The Goods/secrets.ts
-# Top secret
-src/The Goods/jonsole.ts
+src/The Goods/
