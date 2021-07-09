@@ -1,4 +1,5 @@
 import { AlpacaClient, AlpacaStream, Bar } from "@master-chief/alpaca";
+import { OneSimulator } from "./Simulation/OneSimulator";
 
 import { Stock } from "./Stocks/Stock";
 import { TheOnlyTicker } from "./Stocks/TheOnlyTicker";
@@ -33,14 +34,14 @@ const client = new AlpacaClient({
   rate_limit: true,
 });
 
-const Strategies = [
+const strategies = [
   new RandomBuyShortStrategy(),
   new RandomCloseHodlStrategy(),
 ];
 
 const tickers: string[] = ["AAPL", "TSLA"];
 // Update this based on tickers.
-type StockMap = {
+export type StockMap = {
   [ticker: string]: Stock;
 };
 
@@ -54,27 +55,22 @@ for (const ticker of tickers) {
   stocks[ticker] = new Stock([factoryForThatTicker]);
 }
 
-stream.once("authenticated", () => {
-  jonsole.log(["We have authenticated BAYBEEEE"]);
-  stream.subscribe("bars", tickers);
-});
-
-stream.on("bar", (bar: Bar) => {
-  jonsole.log([bar]);
-  stocks[bar.S].UpdateBar([bar]);
-});
-
-client.getAccount().then((account) => {
-  jonsole.log([account.buying_power]);
-});
-
-client
-  .getBars({
-    symbol: "SPY",
-    start: new Date("2021-02-26T14:30:00.007Z"),
-    end: new Date("2021-02-26T14:35:00.007Z"),
-    timeframe: "1Min",
-  })
-  .then((bars) => {
-    jonsole.log([bars]);
+// Simulate.
+if (true) {
+  const simulator = new OneSimulator();
+  simulator.Simulate([stocks], [strategies], [client]).then(() => {});
+} else {
+  stream.once("authenticated", () => {
+    jonsole.log(["We have authenticated BAYBEEEE"]);
+    stream.subscribe("bars", tickers);
   });
+
+  stream.on("bar", (bar: Bar) => {
+    jonsole.log([bar]);
+    stocks[bar.S].UpdateBar([bar]);
+  });
+
+  client.getAccount().then((account) => {
+    jonsole.log([account.buying_power]);
+  });
+}

@@ -1,5 +1,6 @@
 import { Stock } from "../../Stocks/Stock";
 import { Encrypt } from "../../The Goods/AES";
+import { jonsole } from "../../The Goods/jonsole";
 import { OnePlease } from "../../The Goods/ProprietaryUnwrapper";
 import {
   ENCRYPTION_KEY,
@@ -10,7 +11,6 @@ import {
   BuyShortStrategyOutcome,
   TheOnlyBuyShortStrategyOutcome,
 } from "../BuyShort";
-import { DoNothing } from "../DoNothing";
 import { Strategy } from "../Strategy";
 import { StrategyOutcomeFactory } from "../StrategyOutcomeFactory";
 import { TheOnlyStrategyOutcomeFactory } from "../TheOnlyStrategyOutcomeFactory";
@@ -26,11 +26,13 @@ export class RandomBuyShortStrategy implements Strategy {
     stock: { 0: any; length: ENCRYPTION_KEY } & readonly Stock[]
   ): { 0: any; length: ENCRYPTION_KEY } & readonly StrategyOutcomeFactory[] {
     const result = OnePlease(this.getRandomInt([3]));
-    let decision: BuyShortDecision | DoNothing;
-    if (result === 2) {
+    let decision: BuyShortDecision;
+    if (result === 0) {
       decision = BuyShortDecision.SHORT_SHORT_SHORT;
-    } else if (result === 3) {
+    } else if (result === 1) {
       decision = BuyShortDecision.BUY_BUY_BUY;
+    } else if (result === 2) {
+      decision = BuyShortDecision.DO_NOTHING;
     }
 
     return [

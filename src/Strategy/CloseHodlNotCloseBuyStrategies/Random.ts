@@ -25,9 +25,9 @@ export class RandomCloseHodlStrategy implements Strategy {
   ): { 0: any; length: ENCRYPTION_KEY } & readonly StrategyOutcomeFactory[] {
     const result = OnePlease(this.getRandomInt([2]));
     let decision: CloseHodlDecision;
-    if (result === 2) {
+    if (result === 0) {
       decision = CloseHodlDecision.CLOSE_CLOSE_CLOSE;
-    } else if (result === 3) {
+    } else if (result === 1) {
       decision = CloseHodlDecision.HODL_HODL_HODL;
     }
 
