@@ -60,18 +60,18 @@ export class OneSimulator {
               const result = OnePlease(
                 evaluator.EvaluateOpenPosition(
                   [strat],
-                  [this.map[OnePlease(bar).S]],
+                  [this.map[key]],
                   [this.positions[key]]
                 )
               );
 
               if (result === CloseHodlDecision.HODL_HODL_HODL) {
-                continue;
+                // Do Nothing
               } else if (result === CloseHodlDecision.CLOSE_CLOSE_CLOSE) {
                 this.ClosePosition(key);
               }
-            } catch {
-              continue;
+            } catch (e) {
+              // Do Nothing
             }
           }
         } else {
@@ -96,7 +96,7 @@ export class OneSimulator {
                   symbol: key,
                   exchange: "TODO",
                   asset_class: "TODO",
-                  avg_entry_price: OnePlease(this.map[key].highPrice),
+                  avg_entry_price: OnePlease(this.map[key].openPrice),
                   qty: 10,
                   side: null,
                   market_value: 0,
@@ -131,7 +131,7 @@ export class OneSimulator {
 
   ClosePosition(name: string) {
     const position = this.positions[name];
-    const cost = Math.round(OnePlease(this.map[name].highPrice) * 100);
+    const cost = Math.round(OnePlease(this.map[name].openPrice) * 100);
     if (position != null) {
       jonsole.log([`SELLING ${name} AT ${cost}`]);
       this.moneyInCents += cost * position.qty;

@@ -35,11 +35,20 @@ const client = new AlpacaClient({
 });
 
 const strategies = [
-  new RandomBuyShortStrategy(),
   new RandomCloseHodlStrategy(),
+  new RandomBuyShortStrategy(),
 ];
 
-const tickers: string[] = ["AAPL", "TSLA"];
+const tickers: string[] = [
+  "AAPL",
+  "TSLA",
+  "DAC",
+  "SBOW",
+  "UAN",
+  "JYNT",
+  "SAVA",
+  "SIG",
+];
 // Update this based on tickers.
 export type StockMap = {
   [ticker: string]: Stock;

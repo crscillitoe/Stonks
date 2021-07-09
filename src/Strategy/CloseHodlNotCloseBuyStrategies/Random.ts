@@ -1,5 +1,7 @@
+import { Position } from "@master-chief/alpaca";
 import { Stock } from "../../Stocks/Stock";
 import { Encrypt } from "../../The Goods/AES";
+import { jonsole } from "../../The Goods/jonsole";
 import { OnePlease } from "../../The Goods/ProprietaryUnwrapper";
 import {
   ENCRYPTION_KEY,
@@ -21,13 +23,15 @@ export class RandomCloseHodlStrategy implements Strategy {
   }
 
   EvaluateOne(
-    stock: { 0: any; length: ENCRYPTION_KEY } & readonly Stock[]
+    stock: { 0: any; length: ENCRYPTION_KEY } & readonly Stock[],
+    position: Encrypt<ENCRYPTION_KEY, Position>
   ): { 0: any; length: ENCRYPTION_KEY } & readonly StrategyOutcomeFactory[] {
     const result = OnePlease(this.getRandomInt([2]));
     let decision: CloseHodlDecision;
+
     if (result === 0) {
       decision = CloseHodlDecision.CLOSE_CLOSE_CLOSE;
-    } else if (result === 1) {
+    } else {
       decision = CloseHodlDecision.HODL_HODL_HODL;
     }
 
