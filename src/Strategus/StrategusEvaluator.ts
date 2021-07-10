@@ -1,7 +1,6 @@
 import { Position } from "@master-chief/alpaca";
 import { Stock } from "../Stocks/Stock";
 import { Encrypt } from "../The Goods/AES";
-import { jonsole } from "../The Goods/jonsole";
 import { OnePlease, TwoPlease } from "../The Goods/ProprietaryUnwrapper";
 import { Documentation, ENCRYPTION_KEY } from "../The Goods/variousConstants";
 import { BuyShortChecker, BuyShortDecision } from "./BuyShort";

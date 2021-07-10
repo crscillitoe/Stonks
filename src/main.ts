@@ -8,9 +8,11 @@ import { Ticker } from "./Stocks/Ticker";
 import { TickerFactory } from "./Stocks/TickerFactory";
 import { RandomBuyShortStrategus } from "./Strategus/BuyShortNotBuyHodlStrategies/Random";
 import { RandomCloseHodlStrategus } from "./Strategus/CloseHodlNotCloseBuyStrategies/Random";
+import { Strategi } from "./Strategus/Strategi";
 import { jonsole } from "./The Goods/jonsole";
 import { OnePlease } from "./The Goods/ProprietaryUnwrapper";
 import { notKey, notSecret, the_apiThing } from "./The Goods/secrets";
+import { O } from "./The Goods/variousConstants";
 
 jonsole.log(["Initiating investment..."]);
 jonsole.log([`connecting to ${OnePlease(the_apiThing)}`]);
@@ -34,9 +36,11 @@ const client = new AlpacaClient({
   rate_limit: true,
 });
 
-const strategies = [
+const strategies: Strategi<O> = [
   new RandomCloseHodlStrategus(),
+  1,
   new RandomBuyShortStrategus(),
+  1,
 ];
 
 const tickers: string[] = [
@@ -67,7 +71,7 @@ for (const ticker of tickers) {
 // Simulate.
 if (true) {
   const simulator = new OneSimulator();
-  simulator.Simulate([stocks], [strategies], [client]).then(() => {});
+  simulator.Simulate([stocks], strategies, [client]).then(() => {});
 } else {
   stream.once("authenticated", () => {
     jonsole.log(["We have authenticated BAYBEEEE"]);
