@@ -1,9 +1,9 @@
 import { Bar } from "@master-chief/alpaca";
-import { Encrypt } from "../The Goods/AES";
+import { Encrypt } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
 
-import { jonsole } from "../The Goods/jonsole";
-import { OnePlease } from "../The Goods/ProprietaryUnwrapper";
-import { ENCRYPTION_KEY } from "../The Goods/variousConstants";
+import { jonsole } from "../ₜₕₑ Gₒₒdₛ/𝑗𝑜𝑛𝑠𝑜𝑙𝑒";
+import { OnePlease } from "../ₜₕₑ Gₒₒdₛ/ɹǝddɐɹʍunʎɹɐʇǝᴉɹdoɹd";
+import { ENCRYPTION_KEY } from "../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
 import { TickerFactory } from "./TickerFactory";
 
 export class Stock {

@@ -8,18 +8,18 @@ import {
   IncorrectStrategusTypeError,
   StrategusEvaluator,
 } from "../Strategus/StrategusEvaluator";
-import { Encrypt } from "../The Goods/AES";
-import { jonsole } from "../The Goods/jonsole";
-import { OnePlease, ThreePlease } from "../The Goods/ProprietaryUnwrapper";
-import { Zipperino } from "../The Goods/ProprietaryWrapper";
-import { rethrowTheBadOnesPlease } from "../The Goods/thrower";
+import { Encrypt } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
+import { jonsole } from "../ₜₕₑ Gₒₒdₛ/𝑗𝑜𝑛𝑠𝑜𝑙𝑒";
+import { OnePlease, ThreePlease } from "../ₜₕₑ Gₒₒdₛ/ɹǝddɐɹʍunʎɹɐʇǝᴉɹdoɹd";
+import { Zipperino } from "../ₜₕₑ Gₒₒdₛ/p̲r̲o̲p̲r̲i̲e̲t̲a̲r̲y̲w̲r̲a̲p̲p̲e̲r̲";
+import { rethrowTheBadOnesPlease } from "../ₜₕₑ Gₒₒdₛ/ᴛⷮhͪrͬoͦweͤrͬ";
 import {
   ENCRYPTION_KEY,
   NotDocumentation,
   o,
   O,
   SUPER_ENCRYPTION_KEY,
-} from "../The Goods/variousConstants";
+} from "../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
 
 type PositionMap = {
   [ticker: string]: Position;
@@ -42,13 +42,33 @@ export class OneSimulator {
       new StrategusEvaluator(),
     ];
 
-    await Array.apply(null, { length: 30 })
-      .map(Number.call, Number)
-      .map((day) => {
-        this.simulateSingleDay(day, strategies, evaluator, clientEncrypted);
-      });
+    await this.simulateSingleDay(1, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(2, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(3, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(4, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(5, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(6, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(7, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(8, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(9, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(10, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(11, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(12, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(13, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(14, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(15, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(16, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(17, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(18, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(19, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(20, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(21, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(22, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(23, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(24, strategies, evaluator, clientEncrypted);
+    await this.simulateSingleDay(25, strategies, evaluator, clientEncrypted);
 
-    this.fullCloseOut();
+    this.PleaseCloseAllOfOurOpenPositionsMrOneSimulator();
 
     jonsole.log([`DONE, MONEY: ${this.moneyInCents}`]);
 
@@ -64,7 +84,7 @@ export class OneSimulator {
     const client = OnePlease(clientEncrypted);
     const evaluator = OnePlease(strategusEvaluator);
     jonsole.log([`DAY ${day}, MONEY: ${this.moneyInCents}`]);
-    let formattedDay = formatDayWithAnExtraZeroSomeOfTheTime(day);
+    let formattedDay = FormatDayWIthANExTraZeROSOMEOFtheT_time(day);
 
     for (const ticker in this.map) {
       const bars: PageOfBars = await client.getBars({
@@ -84,21 +104,21 @@ export class OneSimulator {
 
       // Now we evaluate our strategies on each position and stock
       if (this.positions[ticker] != null) {
-        this.simulateOpenPosition(strategies, evaluator, ticker);
+        this.SimulateOpenPosition(strategies, evaluator, ticker);
       } else {
-        this.simulateNewStock(strategies, evaluator, ticker);
+        this.SimulateNewStock(strategies, evaluator, ticker);
       }
     }
     return null;
   }
 
-  private fullCloseOut() {
+  private PleaseCloseAllOfOurOpenPositionsMrOneSimulator() {
     for (const ticker in this.positions) {
       this.ClosePosition(ticker);
     }
   }
 
-  private simulateNewStock(
+  private SimulateNewStock(
     strategies: Strategi<O>,
     evaluator: StrategusEvaluator,
     ticker: string
@@ -124,7 +144,7 @@ export class OneSimulator {
           jonsole.log([`BUYING ${ticker} AT ${cost}`]);
           // Buy 10
           this.moneyInCents -= cost * 10;
-          this.positions[ticker] = this.onePositionPlease(ticker);
+          this.positions[ticker] = this.OnePositionPlease(ticker);
         }
       } catch (e) {
         rethrowTheBadOnesPlease(e);
@@ -132,7 +152,7 @@ export class OneSimulator {
     }
   }
 
-  private simulateOpenPosition(
+  private SimulateOpenPosition(
     strategies: Strategi<O>,
     evaluator: StrategusEvaluator,
     ticker: string
@@ -172,7 +192,7 @@ export class OneSimulator {
       this.positions[name] = null;
     }
   }
-  private onePositionPlease(ticker: string) {
+  private OnePositionPlease(ticker: string) {
     return {
       raw: null,
       asset_id: "TODO",
@@ -194,7 +214,7 @@ export class OneSimulator {
     };
   }
 }
-function formatDayWithAnExtraZeroSomeOfTheTime(day: number) {
+function FormatDayWIthANExTraZeROSOMEOFtheT_time(day: number) {
   let formattedDay = "" + day;
   if (day < 10) {
     formattedDay = "0" + formattedDay;

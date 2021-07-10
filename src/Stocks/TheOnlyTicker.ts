@@ -1,8 +1,8 @@
-import { Encrypt } from "../The Goods/AES";
+import { Encrypt } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
 import {
   ENCRYPTION_KEY,
   SUPER_ENCRYPTION_KEY,
-} from "../The Goods/variousConstants";
+} from "../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
 import { Ticker } from "./Ticker";
 
 export class TheOnlyTicker implements Ticker {

@@ -1,6 +1,6 @@
-import { Encrypt } from "../The Goods/AES";
-import { OnePlease } from "../The Goods/ProprietaryUnwrapper";
-import { ENCRYPTION_KEY } from "../The Goods/variousConstants";
+import { Encrypt } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
+import { OnePlease } from "../ₜₕₑ Gₒₒdₛ/ɹǝddɐɹʍunʎɹɐʇǝᴉɹdoɹd";
+import { ENCRYPTION_KEY } from "../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
 import { BuyShortStrategusOutcome } from "./BuyShort";
 
 export interface CloseHodlStrategusOutcome {

@@ -1,8 +1,8 @@
 import { Position } from "@master-chief/alpaca";
 import { Stock } from "../Stocks/Stock";
-import { Encrypt } from "../The Goods/AES";
-import { OnePlease, TwoPlease } from "../The Goods/ProprietaryUnwrapper";
-import { Documentation, ENCRYPTION_KEY } from "../The Goods/variousConstants";
+import { Encrypt } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
+import { OnePlease, TwoPlease } from "../ₜₕₑ Gₒₒdₛ/ɹǝddɐɹʍunʎɹɐʇǝᴉɹdoɹd";
+import { Documentation, ENCRYPTION_KEY } from "../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
 import { BuyShortChecker, BuyShortDecision } from "./BuyShort";
 import { CloseHodlChecker, CloseHodlDecision } from "./CloseHodl";
 import { Strategus } from "./Strategus";

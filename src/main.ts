@@ -9,10 +9,10 @@ import { TickerFactory } from "./Stocks/TickerFactory";
 import { RandomBuyShortStrategus } from "./Strategus/BuyShortNotBuyHodlStrategies/Random";
 import { RandomCloseHodlStrategus } from "./Strategus/CloseHodlNotCloseBuyStrategies/Random";
 import { Strategi } from "./Strategus/Strategi";
-import { jonsole } from "./The Goods/jonsole";
-import { OnePlease } from "./The Goods/ProprietaryUnwrapper";
-import { notKey, notSecret, the_apiThing } from "./The Goods/secrets";
-import { O } from "./The Goods/variousConstants";
+import { jonsole } from "./ₜₕₑ Gₒₒdₛ/𝑗𝑜𝑛𝑠𝑜𝑙𝑒";
+import { OnePlease } from "./ₜₕₑ Gₒₒdₛ/ɹǝddɐɹʍunʎɹɐʇǝᴉɹdoɹd";
+import { notKey, notSecret, the_apiThing } from "./ₜₕₑ Gₒₒdₛ/𝓶𝔂 𝓭𝓲𝓪𝓻𝔂";
+import { O } from "./ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
 
 jonsole.log(["Initiating investment..."]);
 jonsole.log([`connecting to ${OnePlease(the_apiThing)}`]);
