@@ -1,25 +1,26 @@
 import { AlpacaClient, Bar, PageOfBars, Position } from "@master-chief/alpaca";
 import { StockMap } from "../main";
-import { BuyShortChecker, BuyShortDecision } from "../Strategus/BuyShort";
+import { BuyShortDecision } from "../Strategus/BuyShort";
 import { CloseHodlDecision } from "../Strategus/CloseHodl";
 import { Strategi } from "../Strategus/Strategi";
 import { Strategus } from "../Strategus/Strategus";
-import {
-  IncorrectStrategusTypeError,
-  StrategusEvaluator,
-} from "../Strategus/StrategusEvaluator";
-import { Encrypt } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
-import { jonsole } from "../ₜₕₑ Gₒₒdₛ/𝑗𝑜𝑛𝑠𝑜𝑙𝑒";
-import { OnePlease, ThreePlease } from "../ₜₕₑ Gₒₒdₛ/ɹǝddɐɹʍunʎɹɐʇǝᴉɹdoɹd";
+import { StrategusEvaluator } from "../Strategus/StrategusEvaluator";
 import { Zipperino } from "../ₜₕₑ Gₒₒdₛ/p̲r̲o̲p̲r̲i̲e̲t̲a̲r̲y̲w̲r̲a̲p̲p̲e̲r̲";
+import {
+  OnePlease,
+  ThreePlease,
+  TwoPlease,
+} from "../ₜₕₑ Gₒₒdₛ/ɹǝddɐɹʍunʎɹɐʇǝᴉɹdoɹd";
 import { rethrowTheBadOnesPlease } from "../ₜₕₑ Gₒₒdₛ/ᴛⷮhͪrͬoͦweͤrͬ";
 import {
+  Documentation,
   ENCRYPTION_KEY,
   NotDocumentation,
-  o,
   O,
   SUPER_ENCRYPTION_KEY,
 } from "../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
+import { Encrypt } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
+import { jonsole } from "../ₜₕₑ Gₒₒdₛ/𝑗𝑜𝑛𝑠𝑜𝑙𝑒";
 
 type PositionMap = {
   [ticker: string]: Position;
@@ -42,31 +43,9 @@ export class OneSimulator {
       new StrategusEvaluator(),
     ];
 
-    await this.simulateSingleDay(1, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(2, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(3, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(4, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(5, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(6, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(7, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(8, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(9, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(10, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(11, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(12, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(13, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(14, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(15, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(16, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(17, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(18, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(19, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(20, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(21, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(22, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(23, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(24, strategies, evaluator, clientEncrypted);
-    await this.simulateSingleDay(25, strategies, evaluator, clientEncrypted);
+    for (let day = 1; day < 30; day++) {
+      await this.simulateSingleDay(day, strategies, evaluator, clientEncrypted);
+    }
 
     this.PleaseCloseAllOfOurOpenPositionsMrOneSimulator();
 
@@ -84,7 +63,7 @@ export class OneSimulator {
     const client = OnePlease(clientEncrypted);
     const evaluator = OnePlease(strategusEvaluator);
     jonsole.log([`DAY ${day}, MONEY: ${this.moneyInCents}`]);
-    let formattedDay = FormatDayWIthANExTraZeROSOMEOFtheT_time(day);
+    let formattedDay = formatDayWithAnExtraZeroSomeOfTheTime(day);
 
     for (const ticker in this.map) {
       const bars: PageOfBars = await client.getBars({
@@ -95,18 +74,29 @@ export class OneSimulator {
       });
 
       // Skip weekends
-      if (!bars.bars.length) {
+      if (bars.bars.length < 1) {
         continue;
       }
 
-      const bar: Encrypt<ENCRYPTION_KEY, Bar> = [bars.bars[0]];
+      if (bars.bars.length !== 1) {
+        throw "Fuck";
+      }
+
+      const bar: Encrypt<ENCRYPTION_KEY, Bar> = TwoPlease([
+        "This is certainly length 1, so we can unsafely cast" as Documentation as Encrypt<
+          ENCRYPTION_KEY,
+          Bar
+        >,
+        bars.bars as NotDocumentation as Encrypt<ENCRYPTION_KEY, Bar>,
+      ]);
+
       this.map[ticker].UpdateBar(bar);
 
       // Now we evaluate our strategies on each position and stock
       if (this.positions[ticker] != null) {
-        this.SimulateOpenPosition(strategies, evaluator, ticker);
+        this.simulateOpenPosition(strategies, evaluator, ticker);
       } else {
-        this.SimulateNewStock(strategies, evaluator, ticker);
+        this.simulateNewStock(strategies, evaluator, ticker);
       }
     }
     return null;
@@ -118,7 +108,7 @@ export class OneSimulator {
     }
   }
 
-  private SimulateNewStock(
+  private simulateNewStock(
     strategies: Strategi<O>,
     evaluator: StrategusEvaluator,
     ticker: string
@@ -144,7 +134,7 @@ export class OneSimulator {
           jonsole.log([`BUYING ${ticker} AT ${cost}`]);
           // Buy 10
           this.moneyInCents -= cost * 10;
-          this.positions[ticker] = this.OnePositionPlease(ticker);
+          this.positions[ticker] = this.onePositionPlease(ticker);
         }
       } catch (e) {
         rethrowTheBadOnesPlease(e);
@@ -152,7 +142,7 @@ export class OneSimulator {
     }
   }
 
-  private SimulateOpenPosition(
+  private simulateOpenPosition(
     strategies: Strategi<O>,
     evaluator: StrategusEvaluator,
     ticker: string
@@ -192,7 +182,7 @@ export class OneSimulator {
       this.positions[name] = null;
     }
   }
-  private OnePositionPlease(ticker: string) {
+  private onePositionPlease(ticker: string) {
     return {
       raw: null,
       asset_id: "TODO",
@@ -214,7 +204,7 @@ export class OneSimulator {
     };
   }
 }
-function FormatDayWIthANExTraZeROSOMEOFtheT_time(day: number) {
+function formatDayWithAnExtraZeroSomeOfTheTime(day: number) {
   let formattedDay = "" + day;
   if (day < 10) {
     formattedDay = "0" + formattedDay;
