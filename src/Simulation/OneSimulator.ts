@@ -19,7 +19,7 @@ import {
   O,
   SUPER_ENCRYPTION_KEY,
 } from "../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
-import { Encrypt } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
+import { Encrypt, SecretStrategusAdjuster } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
 import { jonsole } from "../ₜₕₑ Gₒₒdₛ/𝑗𝑜𝑛𝑠𝑜𝑙𝑒";
 
 type PositionMap = {
@@ -147,6 +147,8 @@ export class OneSimulator {
     evaluator: StrategusEvaluator,
     ticker: string
   ) {
+    let paper = 0;
+    let diamond = 0;
     for (const strat of Zipperino(strategies)) {
       try {
         const result = OnePlease(
@@ -164,12 +166,30 @@ export class OneSimulator {
           )
         );
 
+        // We know we've come to a decision
+
         if (result === CloseHodlDecision.CLOSE_CLOSE_CLOSE) {
-          this.ClosePosition(ticker);
+          paper += TwoPlease(
+            strat as NotDocumentation as Encrypt<
+              SUPER_ENCRYPTION_KEY,
+              SecretStrategusAdjuster
+            >
+          );
+        } else {
+          diamond += TwoPlease(
+            strat as NotDocumentation as Encrypt<
+              SUPER_ENCRYPTION_KEY,
+              SecretStrategusAdjuster
+            >
+          );
         }
       } catch (e) {
         rethrowTheBadOnesPlease(e);
       }
+    }
+
+    if (paper > diamond) {
+      this.ClosePosition(ticker);
     }
   }
 

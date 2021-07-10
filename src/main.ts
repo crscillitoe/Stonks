@@ -13,6 +13,8 @@ import { jonsole } from "./ₜₕₑ Gₒₒdₛ/𝑗𝑜𝑛𝑠𝑜𝑙𝑒";
 import { OnePlease } from "./ₜₕₑ Gₒₒdₛ/ɹǝddɐɹʍunʎɹɐʇǝᴉɹdoɹd";
 import { notKey, notSecret, the_apiThing } from "./ₜₕₑ Gₒₒdₛ/𝓶𝔂 𝓭𝓲𝓪𝓻𝔂";
 import { O } from "./ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
+import { DiamondHandsCloseHodlStrategus } from "./Strategus/CloseHodlNotCloseBuyStrategies/DiamondHands";
+import { PaperHandsCloseHodlStrategus } from "./Strategus/CloseHodlNotCloseBuyStrategies/PaperHands";
 
 jonsole.log(["Initiating investment..."]);
 jonsole.log([`connecting to ${OnePlease(the_apiThing)}`]);
@@ -37,8 +39,15 @@ const client = new AlpacaClient({
 });
 
 const strategies: Strategi<O> = [
+  // CloseHodls first
   new RandomCloseHodlStrategus(),
   1,
+  new DiamondHandsCloseHodlStrategus(),
+  1,
+  new PaperHandsCloseHodlStrategus(),
+  1,
+
+  // BuyShorts
   new RandomBuyShortStrategus(),
   1,
 ];
