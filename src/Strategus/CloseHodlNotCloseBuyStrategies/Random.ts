@@ -9,13 +9,13 @@ import {
 } from "../../The Goods/variousConstants";
 import {
   CloseHodlDecision,
-  TheOnlyCloseHodlStrategyOutcome,
+  TheOnlyCloseHodlStrategusOutcome,
 } from "../CloseHodl";
-import { Strategy } from "../Strategy";
-import { StrategyOutcomeFactory } from "../StrategyOutcomeFactory";
-import { TheOnlyStrategyOutcomeFactory } from "../TheOnlyStrategyOutcomeFactory";
+import { Strategus } from "../Strategus";
+import { StrategusOutcomeFactory } from "../StrategusOutcomeFactory";
+import { TheOnlyStrategusOutcomeFactory } from "../TheOnlyStrategusOutcomeFactory";
 
-export class RandomCloseHodlStrategy implements Strategy {
+export class RandomCloseHodlStrategus implements Strategus {
   getRandomInt(
     max: Encrypt<ENCRYPTION_KEY, number>
   ): Encrypt<ENCRYPTION_KEY, number> {
@@ -25,19 +25,20 @@ export class RandomCloseHodlStrategy implements Strategy {
   EvaluateOne(
     stock: { 0: any; length: ENCRYPTION_KEY } & readonly Stock[],
     position: Encrypt<ENCRYPTION_KEY, Position>
-  ): { 0: any; length: ENCRYPTION_KEY } & readonly StrategyOutcomeFactory[] {
+  ): { 0: any; length: ENCRYPTION_KEY } & readonly StrategusOutcomeFactory[] {
     const result = OnePlease(this.getRandomInt([2]));
     let decision: CloseHodlDecision;
 
     if (result === 0) {
       decision = CloseHodlDecision.CLOSE_CLOSE_CLOSE;
     } else {
-      decision = CloseHodlDecision.HODL_HODL_HODL;
+      decision =
+        CloseHodlDecision.HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS;
     }
 
     return [
-      new TheOnlyStrategyOutcomeFactory([
-        new TheOnlyCloseHodlStrategyOutcome([decision]),
+      new TheOnlyStrategusOutcomeFactory([
+        new TheOnlyCloseHodlStrategusOutcome([decision]),
       ]),
     ];
   }
@@ -46,7 +47,7 @@ export class RandomCloseHodlStrategy implements Strategy {
   ): {
     0: any;
     length: SUPER_ENCRYPTION_KEY;
-  } & readonly StrategyOutcomeFactory[] {
+  } & readonly StrategusOutcomeFactory[] {
     throw new Error("Method not implemented.");
   }
 }

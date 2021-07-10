@@ -6,8 +6,8 @@ import { TheOnlyTicker } from "./Stocks/TheOnlyTicker";
 import { TheOnlyTickerFactory } from "./Stocks/TheOnlyTickerFactory";
 import { Ticker } from "./Stocks/Ticker";
 import { TickerFactory } from "./Stocks/TickerFactory";
-import { RandomBuyShortStrategy } from "./Strategy/BuyShortNotBuyHodlStrategies/Random";
-import { RandomCloseHodlStrategy } from "./Strategy/CloseHodlNotCloseBuyStrategies/Random";
+import { RandomBuyShortStrategus } from "./Strategus/BuyShortNotBuyHodlStrategies/Random";
+import { RandomCloseHodlStrategus } from "./Strategus/CloseHodlNotCloseBuyStrategies/Random";
 import { jonsole } from "./The Goods/jonsole";
 import { OnePlease } from "./The Goods/ProprietaryUnwrapper";
 import { notKey, notSecret, the_apiThing } from "./The Goods/secrets";
@@ -35,8 +35,8 @@ const client = new AlpacaClient({
 });
 
 const strategies = [
-  new RandomCloseHodlStrategy(),
-  new RandomBuyShortStrategy(),
+  new RandomCloseHodlStrategus(),
+  new RandomBuyShortStrategus(),
 ];
 
 const tickers: string[] = [
@@ -77,6 +77,7 @@ if (true) {
   stream.on("bar", (bar: Bar) => {
     jonsole.log([bar]);
     stocks[bar.S].UpdateBar([bar]);
+    // Run buy/sell/close/hodl logic
   });
 
   client.getAccount().then((account) => {

@@ -1,9 +1,9 @@
 import { AlpacaClient, Bar, PageOfBars, Position } from "@master-chief/alpaca";
 import { StockMap } from "../main";
-import { BuyShortChecker, BuyShortDecision } from "../Strategy/BuyShort";
-import { CloseHodlDecision } from "../Strategy/CloseHodl";
-import { Strategy } from "../Strategy/Strategy";
-import { StrategyEvaluator } from "../Strategy/StrategyEvaluator";
+import { BuyShortChecker, BuyShortDecision } from "../Strategus/BuyShort";
+import { CloseHodlDecision } from "../Strategus/CloseHodl";
+import { Strategus } from "../Strategus/Strategus";
+import { StrategusEvaluator } from "../Strategus/StrategusEvaluator";
 import { Encrypt } from "../The Goods/AES";
 import { jonsole } from "../The Goods/jonsole";
 import { OnePlease } from "../The Goods/ProprietaryUnwrapper";
@@ -19,7 +19,7 @@ export class OneSimulator {
   moneyInCents: number;
   async Simulate(
     tickers: Encrypt<ENCRYPTION_KEY, StockMap>,
-    strategies: Encrypt<ENCRYPTION_KEY, Strategy[]>,
+    strategies: Encrypt<ENCRYPTION_KEY, Strategus[]>,
     clientEncrypted: Encrypt<ENCRYPTION_KEY, AlpacaClient>
   ) {
     this.map = OnePlease(tickers);
@@ -28,7 +28,7 @@ export class OneSimulator {
     this.positions = {};
     // 100,000 dollars
     this.moneyInCents = 100_000_00;
-    const evaluator = new StrategyEvaluator();
+    const evaluator = new StrategusEvaluator();
     let cost = 0;
 
     for (let day = 1; day < 30; day++) {
@@ -65,7 +65,10 @@ export class OneSimulator {
                 )
               );
 
-              if (result === CloseHodlDecision.HODL_HODL_HODL) {
+              if (
+                result ===
+                CloseHodlDecision.HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS
+              ) {
                 // Do Nothing
               } else if (result === CloseHodlDecision.CLOSE_CLOSE_CLOSE) {
                 this.ClosePosition(key);

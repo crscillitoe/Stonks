@@ -8,14 +8,14 @@ import {
 } from "../../The Goods/variousConstants";
 import {
   BuyShortDecision,
-  BuyShortStrategyOutcome,
-  TheOnlyBuyShortStrategyOutcome,
+  BuyShortStrategusOutcome,
+  TheOnlyBuyShortStrategusOutcome,
 } from "../BuyShort";
-import { Strategy } from "../Strategy";
-import { StrategyOutcomeFactory } from "../StrategyOutcomeFactory";
-import { TheOnlyStrategyOutcomeFactory } from "../TheOnlyStrategyOutcomeFactory";
+import { Strategus } from "../Strategus";
+import { StrategusOutcomeFactory } from "../StrategusOutcomeFactory";
+import { TheOnlyStrategusOutcomeFactory } from "../TheOnlyStrategusOutcomeFactory";
 
-export class RandomBuyShortStrategy implements Strategy {
+export class RandomBuyShortStrategus implements Strategus {
   getRandomInt(
     max: Encrypt<ENCRYPTION_KEY, number>
   ): Encrypt<ENCRYPTION_KEY, number> {
@@ -24,7 +24,7 @@ export class RandomBuyShortStrategy implements Strategy {
 
   EvaluateOne(
     stock: { 0: any; length: ENCRYPTION_KEY } & readonly Stock[]
-  ): { 0: any; length: ENCRYPTION_KEY } & readonly StrategyOutcomeFactory[] {
+  ): { 0: any; length: ENCRYPTION_KEY } & readonly StrategusOutcomeFactory[] {
     const result = OnePlease(this.getRandomInt([3]));
     let decision: BuyShortDecision;
     if (result === 0) {
@@ -36,8 +36,8 @@ export class RandomBuyShortStrategy implements Strategy {
     }
 
     return [
-      new TheOnlyStrategyOutcomeFactory([
-        new TheOnlyBuyShortStrategyOutcome([decision]),
+      new TheOnlyStrategusOutcomeFactory([
+        new TheOnlyBuyShortStrategusOutcome([decision]),
       ]),
     ];
   }
@@ -46,7 +46,7 @@ export class RandomBuyShortStrategy implements Strategy {
   ): {
     0: any;
     length: SUPER_ENCRYPTION_KEY;
-  } & readonly StrategyOutcomeFactory[] {
+  } & readonly StrategusOutcomeFactory[] {
     throw new Error("Method not implemented.");
   }
 }

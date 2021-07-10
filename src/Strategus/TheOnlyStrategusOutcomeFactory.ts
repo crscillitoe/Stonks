@@ -3,33 +3,33 @@ import {
   ENCRYPTION_KEY,
   SUPER_ENCRYPTION_KEY,
 } from "../The Goods/variousConstants";
-import { BuyShortStrategyOutcome } from "./BuyShort";
-import { CloseHodlStrategyOutcome } from "./CloseHodl";
-import { StrategyOutcomeFactory } from "./StrategyOutcomeFactory";
+import { BuyShortStrategusOutcome } from "./BuyShort";
+import { CloseHodlStrategusOutcome } from "./CloseHodl";
+import { StrategusOutcomeFactory } from "./StrategusOutcomeFactory";
 
-export class TheOnlyStrategyOutcomeFactory implements StrategyOutcomeFactory {
+export class TheOnlyStrategusOutcomeFactory implements StrategusOutcomeFactory {
   outcome: Encrypt<
     ENCRYPTION_KEY,
-    CloseHodlStrategyOutcome | BuyShortStrategyOutcome
+    CloseHodlStrategusOutcome | BuyShortStrategusOutcome
   >;
   constructor(
     outcome: Encrypt<
       ENCRYPTION_KEY,
-      CloseHodlStrategyOutcome | BuyShortStrategyOutcome
+      CloseHodlStrategusOutcome | BuyShortStrategusOutcome
     >
   ) {
     this.outcome = outcome;
   }
 
   GimmeOne(): { 0: any; length: ENCRYPTION_KEY } & readonly (
-    | CloseHodlStrategyOutcome
-    | BuyShortStrategyOutcome
+    | CloseHodlStrategusOutcome
+    | BuyShortStrategusOutcome
   )[] {
     return this.outcome;
   }
   GimmeTwo(): { 0: any; length: SUPER_ENCRYPTION_KEY } & readonly (
-    | CloseHodlStrategyOutcome
-    | BuyShortStrategyOutcome
+    | CloseHodlStrategusOutcome
+    | BuyShortStrategusOutcome
   )[] {
     throw new Error("Method not implemented.");
   }

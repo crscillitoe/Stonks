@@ -1,14 +1,16 @@
 import { Encrypt } from "../The Goods/AES";
 import { OnePlease } from "../The Goods/ProprietaryUnwrapper";
 import { ENCRYPTION_KEY } from "../The Goods/variousConstants";
-import { CloseHodlStrategyOutcome } from "./CloseHodl";
+import { CloseHodlStrategusOutcome } from "./CloseHodl";
 
-export interface BuyShortStrategyOutcome {
+export interface BuyShortStrategusOutcome {
   _uuid: Encrypt<ENCRYPTION_KEY, "a0711459-284d-4616-8d48-417e69812ebe">;
   Decision: Encrypt<ENCRYPTION_KEY, BuyShortDecision>;
 }
 
-export class TheOnlyBuyShortStrategyOutcome implements BuyShortStrategyOutcome {
+export class TheOnlyBuyShortStrategusOutcome
+  implements BuyShortStrategusOutcome
+{
   constructor(decision: Encrypt<ENCRYPTION_KEY, BuyShortDecision>) {
     this.Decision = decision;
     this._uuid = ["a0711459-284d-4616-8d48-417e69812ebe"] as Encrypt<
@@ -27,9 +29,9 @@ export class BuyShortChecker {
   static isBuyShort(
     outcome: Encrypt<
       ENCRYPTION_KEY,
-      CloseHodlStrategyOutcome | BuyShortStrategyOutcome
+      CloseHodlStrategusOutcome | BuyShortStrategusOutcome
     >
-  ): outcome is Encrypt<ENCRYPTION_KEY, BuyShortStrategyOutcome> {
+  ): outcome is Encrypt<ENCRYPTION_KEY, BuyShortStrategusOutcome> {
     return (
       OnePlease(OnePlease(outcome)._uuid) ===
       "a0711459-284d-4616-8d48-417e69812ebe"
