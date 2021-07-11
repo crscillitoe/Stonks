@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@master-chief/alpaca": "^6.2.4"
+    "@master-chief/alpaca": "^6.2.4",
+    "@types/node": "^16.3.1"
   }
 }

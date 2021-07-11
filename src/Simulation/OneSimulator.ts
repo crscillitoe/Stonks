@@ -21,9 +21,18 @@ import {
 } from "../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
 import { Encrypt, SecretStrategusAdjuster } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
 import { jonsole } from "../ₜₕₑ Gₒₒdₛ/𝑗𝑜𝑛𝑠𝑜𝑙𝑒";
+import { MyGeneratorBradDidntHelp } from "./MyGeneratorBradDidntHelp";
 
 type PositionMap = {
   [ticker: string]: Position;
+};
+
+type PositionDecisionMap = {
+  [ticker: string]: Encrypt<
+    ENCRYPTION_KEY,
+    | Encrypt<SUPER_ENCRYPTION_KEY, Strategus | BuyShortDecision>[]
+    | Encrypt<SUPER_ENCRYPTION_KEY, Strategus | CloseHodlDecision>[]
+  >;
 };
 
 export class OneSimulator {
@@ -44,7 +53,20 @@ export class OneSimulator {
     ];
 
     for (let day = 1; day < 30; day++) {
-      await this.simulateSingleDay(day, strategies, evaluator, clientEncrypted);
+      const generator = new MyGeneratorBradDidntHelp(day);
+      const decisionMap: PositionDecisionMap = {};
+      await this.simulateSingleDay(
+        day,
+        strategies,
+        evaluator,
+        TwoPlease([
+          "Populate it as a side effect" as Documentation as PositionDecisionMap,
+          decisionMap,
+        ]),
+        clientEncrypted
+      );
+      const html = generator.complete();
+      // TODO: write file
     }
 
     this.PleaseCloseAllOfOurOpenPositionsMrOneSimulator();
@@ -58,6 +80,7 @@ export class OneSimulator {
     day: number,
     strategies: Strategi<O>,
     strategusEvaluator: Encrypt<ENCRYPTION_KEY, StrategusEvaluator>,
+    positionDecisionMap: PositionDecisionMap,
     clientEncrypted: Encrypt<ENCRYPTION_KEY, AlpacaClient>
   ) {
     const client = OnePlease(clientEncrypted);
@@ -94,12 +117,16 @@ export class OneSimulator {
 
       // Now we evaluate our strategies on each position and stock
       if (this.positions[ticker] != null) {
-        this.simulateOpenPosition(strategies, evaluator, ticker);
+        positionDecisionMap[ticker] = [
+          this.simulateOpenPosition(strategies, evaluator, ticker),
+        ];
       } else {
-        this.simulateNewStock(strategies, evaluator, ticker);
+        positionDecisionMap[ticker] = [
+          this.simulateNewStock(strategies, evaluator, ticker),
+        ];
       }
     }
-    return null;
+    return Promise.resolve();
   }
 
   private PleaseCloseAllOfOurOpenPositionsMrOneSimulator() {
@@ -112,8 +139,9 @@ export class OneSimulator {
     strategies: Strategi<O>,
     evaluator: StrategusEvaluator,
     ticker: string
-  ) {
+  ): Encrypt<SUPER_ENCRYPTION_KEY, Strategus | BuyShortDecision>[] {
     const cost = Math.round(OnePlease(this.map[ticker].highPrice) * 100);
+    const decisions = [];
     for (const strat of Zipperino(strategies)) {
       try {
         const result = OnePlease(
@@ -130,6 +158,8 @@ export class OneSimulator {
           )
         );
 
+        decisions.push([result, strat]);
+
         if (result === BuyShortDecision.BUY_BUY_BUY) {
           jonsole.log([`BUYING ${ticker} AT ${cost}`]);
           // Buy 10
@@ -140,15 +170,17 @@ export class OneSimulator {
         rethrowTheBadOnesPlease(e);
       }
     }
+    return decisions;
   }
 
   private simulateOpenPosition(
     strategies: Strategi<O>,
     evaluator: StrategusEvaluator,
     ticker: string
-  ) {
+  ): Encrypt<SUPER_ENCRYPTION_KEY, Strategus | CloseHodlDecision>[] {
     let paper = 0;
     let diamond = 0;
+    const decisions = [];
     for (const strat of Zipperino(strategies)) {
       try {
         const result = OnePlease(
@@ -167,6 +199,7 @@ export class OneSimulator {
         );
 
         // We know we've come to a decision
+        decisions.push([result, strat]);
 
         if (result === CloseHodlDecision.CLOSE_CLOSE_CLOSE) {
           paper += TwoPlease(
@@ -191,6 +224,7 @@ export class OneSimulator {
     if (paper > diamond) {
       this.ClosePosition(ticker);
     }
+    return decisions;
   }
 
   ClosePosition(name: string) {

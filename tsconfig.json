@@ -5,6 +5,7 @@
     "sourceMap": true,
     "outDir": "dist",
     "esModuleInterop": true,
+    "lib": ["ES2015"]
   },
   "include": ["src/**/*"]
 }
