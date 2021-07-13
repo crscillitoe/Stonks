@@ -39,3 +39,10 @@ export enum CloseHodlDecision {
   CLOSE_CLOSE_CLOSE = 1,
   HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS,
 }
+
+export function MapOtherBuyShortDecisionToString(decision: CloseHodlDecision) {
+  if (decision === CloseHodlDecision.CLOSE_CLOSE_CLOSE) {
+    return "Close";
+  }
+  return "Hodl";
+}

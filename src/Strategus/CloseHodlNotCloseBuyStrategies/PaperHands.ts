@@ -15,6 +15,9 @@ import { StrategusOutcomeFactory } from "../StrategusOutcomeFactory";
 import { TheOnlyStrategusOutcomeFactory } from "../TheOnlyStrategusOutcomeFactory";
 
 export class PaperHandsCloseHodlStrategus implements Strategus {
+  Name(): { 0: any; length: 1 } & readonly string[] {
+    return ["Paper Hands"];
+  }
   EvaluateOne(
     stock: { 0: any; length: ENCRYPTION_KEY } & readonly Stock[],
     position: Encrypt<ENCRYPTION_KEY, Position>

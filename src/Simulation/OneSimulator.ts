@@ -1,11 +1,18 @@
 import { AlpacaClient, Bar, PageOfBars, Position } from "@master-chief/alpaca";
 import { StockMap } from "../main";
-import { BuyShortDecision } from "../Strategus/BuyShort";
-import { CloseHodlDecision } from "../Strategus/CloseHodl";
+import {
+  BuyShortDecision,
+  MapBuyShortDecisionToString,
+} from "../Strategus/BuyShort";
+import {
+  CloseHodlDecision,
+  MapOtherBuyShortDecisionToString,
+} from "../Strategus/CloseHodl";
 import { Strategi } from "../Strategus/Strategi";
 import { Strategus } from "../Strategus/Strategus";
 import { StrategusEvaluator } from "../Strategus/StrategusEvaluator";
 import { Zipperino } from "../ₜₕₑ Gₒₒdₛ/p̲r̲o̲p̲r̲i̲e̲t̲a̲r̲y̲w̲r̲a̲p̲p̲e̲r̲";
+import * as fs from "fs";
 import {
   OnePlease,
   ThreePlease,
@@ -15,6 +22,7 @@ import { rethrowTheBadOnesPlease } from "../ₜₕₑ Gₒₒdₛ/ᴛⷮhͪrͬo�
 import {
   Documentation,
   ENCRYPTION_KEY,
+  Hash,
   NotDocumentation,
   O,
   SUPER_ENCRYPTION_KEY,
@@ -33,6 +41,10 @@ type PositionDecisionMap = {
     | Encrypt<SUPER_ENCRYPTION_KEY, Strategus | BuyShortDecision>[]
     | Encrypt<SUPER_ENCRYPTION_KEY, Strategus | CloseHodlDecision>[]
   >;
+};
+
+type GoodREadableSelfDocumentingTypeName = {
+  [ticker: string]: Encrypt<ENCRYPTION_KEY, string>;
 };
 
 export class OneSimulator {
@@ -55,7 +67,8 @@ export class OneSimulator {
     for (let day = 1; day < 30; day++) {
       const generator = new MyGeneratorBradDidntHelp(day);
       const decisionMap: PositionDecisionMap = {};
-      await this.simulateSingleDay(
+      const decisionMap2: PositionDecisionMap = {};
+      const ultraDecisionMap = await this.simulateSingleDay(
         day,
         strategies,
         evaluator,
@@ -63,10 +76,90 @@ export class OneSimulator {
           "Populate it as a side effect" as Documentation as PositionDecisionMap,
           decisionMap,
         ]),
+        TwoPlease([
+          "Populate this too as a side effect" as Documentation as PositionDecisionMap,
+          decisionMap2,
+        ]),
         clientEncrypted
       );
+
+      // Buy Shorts
+      for (const shlong in decisionMap2) {
+        let votes = [];
+        let stupidBradObjectThing = [];
+        const decisions = decisionMap2[shlong];
+
+        for (const decision of decisions) {
+          jonsole.log([decision]);
+          // @ts-ignore
+          const strategus: Encrypt<
+            // @ts-ignore
+            SUPER_ENCRYPTION_KEY,
+            // @ts-ignore
+            Strategus | SecretStrategusAdjuster
+            // @ts-ignore
+          > = TwoPlease(OnePlease(decision));
+          // @ts-ignore
+          const choice: BuyShortDecision = ThreePlease(OnePlease(decision));
+
+          votes.push(MapBuyShortDecisionToString(choice));
+          stupidBradObjectThing.push(strategus);
+        }
+
+        if (
+          OnePlease(OnePlease(ultraDecisionMap)[shlong]) === "DO NOTHING" ||
+          stupidBradObjectThing.length < 1
+        ) {
+          continue;
+        }
+
+        generator.AddBuyShort(
+          stupidBradObjectThing as NotDocumentation as Hash,
+          votes,
+          this.map[shlong],
+          10,
+          OnePlease(OnePlease(ultraDecisionMap)[shlong]),
+          OnePlease(this.map[shlong].openPrice)
+        );
+      }
+
+      generator.DoneBuyingAndShortingBitttchhh();
+
+      // Close Hodl
+      for (const shlong in decisionMap) {
+        let votes = [];
+        let stupidBradObjectThing = [];
+        const decisions = decisionMap[shlong];
+
+        for (const decision of decisions) {
+          // @ts-ignore
+          const strategus: Encrypt<
+            // @ts-ignore
+            SUPER_ENCRYPTION_KEY,
+            // @ts-ignore
+            Strategus | SecretStrategusAdjuster
+            // @ts-ignore
+          > = TwoPlease(OnePlease(decision));
+          // @ts-ignore
+          const choice: CloseHodlDecision = ThreePlease(OnePlease(decision));
+
+          votes.push(MapOtherBuyShortDecisionToString(choice));
+          stupidBradObjectThing.push(strategus);
+        }
+
+        const entry = this.positions[shlong].avg_entry_price;
+        generator.AddOpenPosition(
+          stupidBradObjectThing as NotDocumentation as Hash,
+          votes,
+          this.map[shlong],
+          10,
+          OnePlease(OnePlease(ultraDecisionMap)[shlong]),
+          OnePlease(this.map[shlong].openPrice) - entry
+        );
+      }
+
       const html = generator.complete();
-      // TODO: write file
+      fs.writeFileSync(`/var/www/stocks/digest${day}.html`, html);
     }
 
     this.PleaseCloseAllOfOurOpenPositionsMrOneSimulator();
@@ -81,8 +174,10 @@ export class OneSimulator {
     strategies: Strategi<O>,
     strategusEvaluator: Encrypt<ENCRYPTION_KEY, StrategusEvaluator>,
     positionDecisionMap: PositionDecisionMap,
+    positionDecisionMap2: PositionDecisionMap,
     clientEncrypted: Encrypt<ENCRYPTION_KEY, AlpacaClient>
-  ) {
+  ): Promise<Encrypt<ENCRYPTION_KEY, GoodREadableSelfDocumentingTypeName>> {
+    const t: GoodREadableSelfDocumentingTypeName = {};
     const client = OnePlease(clientEncrypted);
     const evaluator = OnePlease(strategusEvaluator);
     jonsole.log([`DAY ${day}, MONEY: ${this.moneyInCents}`]);
@@ -118,15 +213,15 @@ export class OneSimulator {
       // Now we evaluate our strategies on each position and stock
       if (this.positions[ticker] != null) {
         positionDecisionMap[ticker] = [
-          this.simulateOpenPosition(strategies, evaluator, ticker),
+          this.simulateOpenPosition(t, strategies, evaluator, ticker),
         ];
       } else {
-        positionDecisionMap[ticker] = [
-          this.simulateNewStock(strategies, evaluator, ticker),
+        positionDecisionMap2[ticker] = [
+          this.simulateNewStock(t, strategies, evaluator, ticker),
         ];
       }
     }
-    return Promise.resolve();
+    return Promise.resolve([t]);
   }
 
   private PleaseCloseAllOfOurOpenPositionsMrOneSimulator() {
@@ -136,6 +231,7 @@ export class OneSimulator {
   }
 
   private simulateNewStock(
+    thing: GoodREadableSelfDocumentingTypeName,
     strategies: Strategi<O>,
     evaluator: StrategusEvaluator,
     ticker: string
@@ -165,6 +261,9 @@ export class OneSimulator {
           // Buy 10
           this.moneyInCents -= cost * 10;
           this.positions[ticker] = this.onePositionPlease(ticker);
+          thing[ticker] = ["BUY"];
+        } else {
+          thing[ticker] = ["DO NOTHING"];
         }
       } catch (e) {
         rethrowTheBadOnesPlease(e);
@@ -174,6 +273,7 @@ export class OneSimulator {
   }
 
   private simulateOpenPosition(
+    moreSideEffects: GoodREadableSelfDocumentingTypeName,
     strategies: Strategi<O>,
     evaluator: StrategusEvaluator,
     ticker: string
@@ -222,8 +322,13 @@ export class OneSimulator {
     }
 
     if (paper > diamond) {
+      moreSideEffects[ticker] = ["SELL"];
       this.ClosePosition(ticker);
+    } else {
+      moreSideEffects[ticker] = ["HOLD"];
     }
+
+    jonsole.log([decisions]);
     return decisions;
   }
 

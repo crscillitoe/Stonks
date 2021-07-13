@@ -44,3 +44,13 @@ export enum BuyShortDecision {
   SHORT_SHORT_SHORT,
   DO_NOTHING,
 }
+
+export function MapBuyShortDecisionToString(decision: BuyShortDecision) {
+  if (decision === BuyShortDecision.BUY_BUY_BUY) {
+    return "Buy";
+  } else if (decision === BuyShortDecision.SHORT_SHORT_SHORT) {
+    return "Short";
+  } else if (decision === BuyShortDecision.DO_NOTHING) {
+    return "Do Nothing";
+  }
+}

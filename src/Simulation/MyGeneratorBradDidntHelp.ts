@@ -17,6 +17,7 @@ import {
   SUPER_ENCRYPTION_KEY,
 } from "../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
 import { Encrypt, SecretStrategusAdjuster } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
+import { jonsole } from "../ₜₕₑ Gₒₒdₛ/𝑗𝑜𝑛𝑠𝑜𝑙𝑒";
 import {
   FourPlease,
   FourPleasePrimey,
@@ -148,7 +149,7 @@ export class MyGeneratorBradDidntHelp {
   }
 
   AddBuyShort(
-    strategies: Strategi<O>,
+    strategies: Hash,
     votes: string[],
     stock: Stock,
     qty: number,
@@ -173,33 +174,13 @@ export class MyGeneratorBradDidntHelp {
     this.woei23j(strategies, votes);
   }
 
-  private woei23j(
-    strategies: { 0: any; length: 8 } & readonly (number | Strategus)[],
-    votes: string[]
-  ) {
+  private woei23j(strategies: Hash, votes: string[]) {
     let count = 0;
-    for (const strat of Zipperino(strategies)) {
-      const strategus = ThreePlease([
-        ThreePlease([
-          TwoPlease([
-            "Grab three" as Documentation as Encrypt<
-              SUPER_ENCRYPTION_KEY,
-              Strategus
-            >,
-            ThreePlease(
-              strat as NotDocumentation as Encrypt<
-                SUPER_ENCRYPTION_KEY,
-                Strategus
-              >
-            ),
-          ]),
-          "Grab two" as Documentation as Encrypt<
-            SUPER_ENCRYPTION_KEY,
-            Strategus
-          >,
-        ]),
-        "done" as Documentation as Encrypt<SUPER_ENCRYPTION_KEY, Strategus>,
-      ]);
+    jonsole.log([strategies]);
+    for (const strat of strategies) {
+      const strategus = ThreePlease(
+        strat as NotDocumentation as Encrypt<SUPER_ENCRYPTION_KEY, Strategus>
+      );
 
       const weight = TwoPlease(
         strat as NotDocumentation as Encrypt<
@@ -210,7 +191,9 @@ export class MyGeneratorBradDidntHelp {
 
       this.html += `
       <p class="close-together">
-      <span><span class="vote-count">${weight}</span> ${typeof strategus} </span
+      <span><span class="vote-count">${weight}</span> ${OnePlease(
+        strategus.Name()
+      )} </span
       ><span class="pad">${TwoPlease([
         "Iterative for loops are for dweebs" as Documentation as string,
         votes[count],

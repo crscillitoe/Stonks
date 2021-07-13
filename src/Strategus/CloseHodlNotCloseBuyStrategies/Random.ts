@@ -16,6 +16,9 @@ import { StrategusOutcomeFactory } from "../StrategusOutcomeFactory";
 import { TheOnlyStrategusOutcomeFactory } from "../TheOnlyStrategusOutcomeFactory";
 
 export class RandomCloseHodlStrategus implements Strategus {
+  Name(): { 0: any; length: 1 } & readonly string[] {
+    return ["Random"];
+  }
   getRandomInt(
     max: Encrypt<ENCRYPTION_KEY, number>
   ): Encrypt<ENCRYPTION_KEY, number> {

@@ -10,4 +10,5 @@ export interface Strategus {
     position: Encrypt<ENCRYPTION_KEY, Position>
   ): Encrypt<ENCRYPTION_KEY, StrategusOutcomeFactory>;
   EvaluateTwo(stock: Encrypt<2, Stock>): Encrypt<2, StrategusOutcomeFactory>;
+  Name(): Encrypt<ENCRYPTION_KEY, string>;
 }
