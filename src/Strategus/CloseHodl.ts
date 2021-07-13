@@ -38,11 +38,18 @@ export class CloseHodlChecker {
 export enum CloseHodlDecision {
   CLOSE_CLOSE_CLOSE = 1,
   HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS,
+  NO_OPINION,
 }
 
 export function MapOtherBuyShortDecisionToString(decision: CloseHodlDecision) {
   if (decision === CloseHodlDecision.CLOSE_CLOSE_CLOSE) {
     return "Close";
+  } else if (
+    decision ===
+    CloseHodlDecision.HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS
+  ) {
+    return "Hodl";
+  } else {
+    return "No Opinion";
   }
-  return "Hodl";
 }

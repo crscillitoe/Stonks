@@ -307,7 +307,10 @@ export class OneSimulator {
               SecretStrategusAdjuster
             >
           );
-        } else {
+        } else if (
+          result ===
+          CloseHodlDecision.HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS
+        ) {
           diamond += TwoPlease(
             strat as NotDocumentation as Encrypt<
               SUPER_ENCRYPTION_KEY,

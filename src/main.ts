@@ -43,7 +43,7 @@ const strategies: Strategi<O> = [
   new RandomCloseHodlStrategus(),
   1,
   new DiamondHandsCloseHodlStrategus(),
-  1,
+  Number.POSITIVE_INFINITY,
   new PaperHandsCloseHodlStrategus(),
   1,
 

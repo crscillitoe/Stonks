@@ -19,20 +19,39 @@ export class DiamondHandsCloseHodlStrategus implements Strategus {
   Name(): { 0: any; length: 1 } & readonly string[] {
     return ["Diamond Hands"];
   }
+  getRandomInt(
+    max: Encrypt<ENCRYPTION_KEY, number>
+  ): Encrypt<ENCRYPTION_KEY, number> {
+    return [Math.floor(Math.random() * OnePlease(max))];
+  }
   EvaluateOne(
     stock: { 0: any; length: ENCRYPTION_KEY } & readonly Stock[],
     position: Encrypt<ENCRYPTION_KEY, Position>
   ): { 0: any; length: ENCRYPTION_KEY } & readonly StrategusOutcomeFactory[] {
+    const result = OnePlease(this.getRandomInt([10]));
+    if (result === 5) {
+      return TwoPlease([
+        "Always hodl. Diamond Hands." as Documentation as Encrypt<
+          ENCRYPTION_KEY,
+          TheOnlyStrategusOutcomeFactory
+        >,
+        [
+          new TheOnlyStrategusOutcomeFactory([
+            new TheOnlyCloseHodlStrategusOutcome([
+              CloseHodlDecision.HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS,
+            ]),
+          ]),
+        ],
+      ]);
+    }
     return TwoPlease([
-      "Always hodl. Diamond Hands." as Documentation as Encrypt<
+      "Always hodl. Except when you have no opinion. Hands." as Documentation as Encrypt<
         ENCRYPTION_KEY,
         TheOnlyStrategusOutcomeFactory
       >,
       [
         new TheOnlyStrategusOutcomeFactory([
-          new TheOnlyCloseHodlStrategusOutcome([
-            CloseHodlDecision.HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS,
-          ]),
+          new TheOnlyCloseHodlStrategusOutcome([CloseHodlDecision.NO_OPINION]),
         ]),
       ],
     ]);
