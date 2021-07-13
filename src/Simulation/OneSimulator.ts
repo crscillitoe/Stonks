@@ -90,7 +90,6 @@ export class OneSimulator {
         const decisions = decisionMap2[shlong];
 
         for (const decision of decisions) {
-          jonsole.log([decision]);
           // @ts-ignore
           const strategus: Encrypt<
             // @ts-ignore
@@ -106,10 +105,7 @@ export class OneSimulator {
           stupidBradObjectThing.push(strategus);
         }
 
-        if (
-          OnePlease(OnePlease(ultraDecisionMap)[shlong]) === "DO NOTHING" ||
-          stupidBradObjectThing.length < 1
-        ) {
+        if (OnePlease(OnePlease(ultraDecisionMap)[shlong]) === "DO NOTHING") {
           continue;
         }
 
@@ -129,7 +125,7 @@ export class OneSimulator {
       for (const shlong in decisionMap) {
         let votes = [];
         let stupidBradObjectThing = [];
-        const decisions = decisionMap[shlong];
+        const decisions = OnePlease(decisionMap[shlong]);
 
         for (const decision of decisions) {
           // @ts-ignore
@@ -139,9 +135,9 @@ export class OneSimulator {
             // @ts-ignore
             Strategus | SecretStrategusAdjuster
             // @ts-ignore
-          > = TwoPlease(OnePlease(decision));
+          > = TwoPlease(decision);
           // @ts-ignore
-          const choice: CloseHodlDecision = ThreePlease(OnePlease(decision));
+          const choice: CloseHodlDecision = ThreePlease(decision);
 
           votes.push(MapOtherBuyShortDecisionToString(choice));
           stupidBradObjectThing.push(strategus);
@@ -156,6 +152,9 @@ export class OneSimulator {
           OnePlease(OnePlease(ultraDecisionMap)[shlong]),
           OnePlease(this.map[shlong].openPrice) - entry
         );
+        if (OnePlease(OnePlease(ultraDecisionMap)[shlong]) === "SELL") {
+          this.ClosePosition(shlong);
+        }
       }
 
       const html = generator.complete();
@@ -323,12 +322,10 @@ export class OneSimulator {
 
     if (paper > diamond) {
       moreSideEffects[ticker] = ["SELL"];
-      this.ClosePosition(ticker);
     } else {
       moreSideEffects[ticker] = ["HOLD"];
     }
 
-    jonsole.log([decisions]);
     return decisions;
   }
 
@@ -338,7 +335,7 @@ export class OneSimulator {
     if (position != null) {
       jonsole.log([`SELLING ${name} AT ${cost}`]);
       this.moneyInCents += cost * position.qty;
-      this.positions[name] = null;
+      delete this.positions[name];
     }
   }
   private onePositionPlease(ticker: string) {

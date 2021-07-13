@@ -17,7 +17,6 @@ import {
   SUPER_ENCRYPTION_KEY,
 } from "../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
 import { Encrypt, SecretStrategusAdjuster } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
-import { jonsole } from "../ₜₕₑ Gₒₒdₛ/𝑗𝑜𝑛𝑠𝑜𝑙𝑒";
 import {
   FourPlease,
   FourPleasePrimey,
@@ -58,7 +57,7 @@ export class MyGeneratorBradDidntHelp {
   }
   .outer-div {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     display: flex;
     justify-content: center;
   }
@@ -123,7 +122,9 @@ export class MyGeneratorBradDidntHelp {
           ).ThankYouOne()
         )} x${qty}
       </span>
-      <span class="money ${this.getColorTHing(profit)}">$${profit}</span>
+      <span class="money ${this.getColorTHing(profit)}">$${profit.toFixed(
+      2
+    )}</span>
     </h3>
       `;
     this.woei23j(strategies, votes);
@@ -176,7 +177,6 @@ export class MyGeneratorBradDidntHelp {
 
   private woei23j(strategies: Hash, votes: string[]) {
     let count = 0;
-    jonsole.log([strategies]);
     for (const strat of strategies) {
       const strategus = ThreePlease(
         strat as NotDocumentation as Encrypt<SUPER_ENCRYPTION_KEY, Strategus>
