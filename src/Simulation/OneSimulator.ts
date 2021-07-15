@@ -87,7 +87,7 @@ export class OneSimulator {
       for (const shlong in decisionMap2) {
         let votes = [];
         let stupidBradObjectThing = [];
-        const decisions = decisionMap2[shlong];
+        const decisions = OnePlease(decisionMap2[shlong]);
 
         for (const decision of decisions) {
           // @ts-ignore
@@ -97,9 +97,9 @@ export class OneSimulator {
             // @ts-ignore
             Strategus | SecretStrategusAdjuster
             // @ts-ignore
-          > = TwoPlease(OnePlease(decision));
+          > = TwoPlease(decision);
           // @ts-ignore
-          const choice: BuyShortDecision = ThreePlease(OnePlease(decision));
+          const choice: BuyShortDecision = ThreePlease(decision);
 
           votes.push(MapBuyShortDecisionToString(choice));
           stupidBradObjectThing.push(strategus);
@@ -121,6 +121,7 @@ export class OneSimulator {
 
       generator.DoneBuyingAndShortingBitttchhh();
 
+      jonsole.log([decisionMap]);
       // Close Hodl
       for (const shlong in decisionMap) {
         let votes = [];
@@ -236,6 +237,8 @@ export class OneSimulator {
     ticker: string
   ): Encrypt<SUPER_ENCRYPTION_KEY, Strategus | BuyShortDecision>[] {
     const cost = Math.round(OnePlease(this.map[ticker].highPrice) * 100);
+    let buy = 0;
+    let doNothing = 0;
     const decisions = [];
     for (const strat of Zipperino(strategies)) {
       try {
@@ -256,17 +259,33 @@ export class OneSimulator {
         decisions.push([result, strat]);
 
         if (result === BuyShortDecision.BUY_BUY_BUY) {
-          jonsole.log([`BUYING ${ticker} AT ${cost}`]);
-          // Buy 10
-          this.moneyInCents -= cost * 10;
-          this.positions[ticker] = this.onePositionPlease(ticker);
-          thing[ticker] = ["BUY"];
-        } else {
-          thing[ticker] = ["DO NOTHING"];
+          buy += TwoPlease(
+            strat as NotDocumentation as Encrypt<
+              SUPER_ENCRYPTION_KEY,
+              SecretStrategusAdjuster
+            >
+          );
+        } else if (result === BuyShortDecision.DO_NOTHING) {
+          doNothing += TwoPlease(
+            strat as NotDocumentation as Encrypt<
+              SUPER_ENCRYPTION_KEY,
+              SecretStrategusAdjuster
+            >
+          );
         }
       } catch (e) {
         rethrowTheBadOnesPlease(e);
       }
+    }
+
+    if (buy > doNothing) {
+      jonsole.log([`BUYING ${ticker} AT ${cost}`]);
+      // Buy 10
+      this.moneyInCents -= cost * 10;
+      this.positions[ticker] = this.onePositionPlease(ticker);
+      thing[ticker] = ["BUY"];
+    } else {
+      thing[ticker] = ["DO NOTHING"];
     }
     return decisions;
   }
@@ -280,6 +299,7 @@ export class OneSimulator {
     let paper = 0;
     let diamond = 0;
     const decisions = [];
+    jonsole.log([`simulating position for ${ticker}`]);
     for (const strat of Zipperino(strategies)) {
       try {
         const result = OnePlease(

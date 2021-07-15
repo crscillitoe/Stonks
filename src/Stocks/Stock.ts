@@ -27,6 +27,7 @@ export class Stock {
   }
 
   UpdateBar(bar: Encrypt<ENCRYPTION_KEY, Bar>) {
+    jonsole.log(bar);
     this.openPrice = [OnePlease(bar).o];
     this.highPrice = [OnePlease(bar).h];
     this.lowPrice = [OnePlease(bar).l];

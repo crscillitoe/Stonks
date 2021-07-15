@@ -15,6 +15,7 @@ import { notKey, notSecret, the_apiThing } from "./ₜₕₑ Gₒₒdₛ/𝓶�
 import { O } from "./ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
 import { DiamondHandsCloseHodlStrategus } from "./Strategus/CloseHodlNotCloseBuyStrategies/DiamondHands";
 import { PaperHandsCloseHodlStrategus } from "./Strategus/CloseHodlNotCloseBuyStrategies/PaperHands";
+import { ChristiansSuperiorStrategus } from "./Strategus/BuyShortNotBuyHodlStrategies/ChristiansSuperiorStrategus";
 
 jonsole.log(["Initiating investment..."]);
 jonsole.log([`connecting to ${OnePlease(the_apiThing)}`]);
@@ -50,6 +51,8 @@ const strategies: Strategi<O> = [
   // BuyShorts
   new RandomBuyShortStrategus(),
   1,
+  new ChristiansSuperiorStrategus(),
+  Number.POSITIVE_INFINITY,
 ];
 
 const tickers: string[] = [

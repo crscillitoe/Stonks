@@ -1,4 +1,3 @@
-import { Position } from "@master-chief/alpaca";
 import { Stock } from "../../Stocks/Stock";
 import { Encrypt } from "../../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
 import { jonsole } from "../../ₜₕₑ Gₒₒdₛ/𝑗𝑜𝑛𝑠𝑜𝑙𝑒";
@@ -8,44 +7,35 @@ import {
   SUPER_ENCRYPTION_KEY,
 } from "../../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
 import {
-  CloseHodlDecision,
-  TheOnlyCloseHodlStrategusOutcome,
-} from "../CloseHodl";
+  BuyShortDecision,
+  BuyShortStrategusOutcome,
+  TheOnlyBuyShortStrategusOutcome,
+} from "../BuyShort";
 import { Strategus } from "../Strategus";
 import { StrategusOutcomeFactory } from "../StrategusOutcomeFactory";
 import { TheOnlyStrategusOutcomeFactory } from "../TheOnlyStrategusOutcomeFactory";
-import { ReturnEarlyIfNull } from "../../ₜₕₑ Gₒₒdₛ/🄴🄽🄲🅈🄲🄻🄾🄿🄴🄳🄸🄰";
 
-export class RandomCloseHodlStrategus implements Strategus {
+export class ChristiansSuperiorStrategus implements Strategus {
   Name(): { 0: any; length: 1 } & readonly string[] {
-    return ["Random"];
+    return ["C's Strategus"];
   }
-  getRandomInt(
-    max: Encrypt<ENCRYPTION_KEY, number>
-  ): Encrypt<ENCRYPTION_KEY, number> {
-    return [Math.floor(Math.random() * OnePlease(max))];
-  }
-
   EvaluateOne(
-    stock: { 0: any; length: ENCRYPTION_KEY } & readonly Stock[],
-    position: Encrypt<ENCRYPTION_KEY, Position>
+    stock: { 0: any; length: ENCRYPTION_KEY } & readonly Stock[]
   ): { 0: any; length: ENCRYPTION_KEY } & readonly StrategusOutcomeFactory[] {
-    const r = ReturnEarlyIfNull(position);
-    if (r != null) return r;
-
-    const result = OnePlease(this.getRandomInt([2]));
-    let decision: CloseHodlDecision;
-
-    if (result === 0) {
-      decision = CloseHodlDecision.CLOSE_CLOSE_CLOSE;
+    const s = OnePlease(stock);
+    const cents = Math.round(
+      100 * (OnePlease(s.openPrice) - Math.floor(OnePlease(s.openPrice)))
+    );
+    let decision: BuyShortDecision;
+    if (cents <= 69 && cents >= 42) {
+      decision = BuyShortDecision.BUY_BUY_BUY;
     } else {
-      decision =
-        CloseHodlDecision.HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS_HODL_DIAMOND_HANDS;
+      decision = BuyShortDecision.NO_OPINION;
     }
 
     return [
       new TheOnlyStrategusOutcomeFactory([
-        new TheOnlyCloseHodlStrategusOutcome([decision]),
+        new TheOnlyBuyShortStrategusOutcome([decision]),
       ]),
     ];
   }

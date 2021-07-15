@@ -13,6 +13,7 @@ import {
 import { Strategus } from "../Strategus";
 import { StrategusOutcomeFactory } from "../StrategusOutcomeFactory";
 import { TheOnlyStrategusOutcomeFactory } from "../TheOnlyStrategusOutcomeFactory";
+import { ReturnEarlyIfNull } from "../../ₜₕₑ Gₒₒdₛ/🄴🄽🄲🅈🄲🄻🄾🄿🄴🄳🄸🄰";
 
 export class PaperHandsCloseHodlStrategus implements Strategus {
   Name(): { 0: any; length: 1 } & readonly string[] {
@@ -22,6 +23,9 @@ export class PaperHandsCloseHodlStrategus implements Strategus {
     stock: { 0: any; length: ENCRYPTION_KEY } & readonly Stock[],
     position: Encrypt<ENCRYPTION_KEY, Position>
   ): { 0: any; length: ENCRYPTION_KEY } & readonly StrategusOutcomeFactory[] {
+    const r = ReturnEarlyIfNull(position);
+    if (r != null) return r;
+
     let decision: CloseHodlDecision;
 
     const p = OnePlease(position);

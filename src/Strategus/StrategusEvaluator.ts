@@ -2,14 +2,18 @@ import { Position } from "@master-chief/alpaca";
 import { Stock } from "../Stocks/Stock";
 import { Encrypt } from "../ₜₕₑ Gₒₒdₛ/𝐴𝐸𝑆";
 import { OnePlease, TwoPlease } from "../ₜₕₑ Gₒₒdₛ/ɹǝddɐɹʍunʎɹɐʇǝᴉɹdoɹd";
-import { Documentation, ENCRYPTION_KEY } from "../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
+import {
+  Documentation,
+  ENCRYPTION_KEY,
+  ThisIsTheMostImportantVariableInTheEntireProjectGoodLuckRecreatingIt,
+} from "../ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾𝒶𝓇𝓎";
 import { BuyShortChecker, BuyShortDecision } from "./BuyShort";
 import { CloseHodlChecker, CloseHodlDecision } from "./CloseHodl";
 import { Strategus } from "./Strategus";
 
 export class IncorrectStrategusTypeError extends Error {
   constructor(msg: string) {
-    super(msg);
+    super(ThisIsTheMostImportantVariableInTheEntireProjectGoodLuckRecreatingIt);
   }
 }
 

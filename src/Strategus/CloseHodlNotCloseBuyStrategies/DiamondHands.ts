@@ -14,6 +14,7 @@ import {
 import { Strategus } from "../Strategus";
 import { StrategusOutcomeFactory } from "../StrategusOutcomeFactory";
 import { TheOnlyStrategusOutcomeFactory } from "../TheOnlyStrategusOutcomeFactory";
+import { ReturnEarlyIfNull } from "../../ₜₕₑ Gₒₒdₛ/🄴🄽🄲🅈🄲🄻🄾🄿🄴🄳🄸🄰";
 
 export class DiamondHandsCloseHodlStrategus implements Strategus {
   Name(): { 0: any; length: 1 } & readonly string[] {
@@ -28,6 +29,9 @@ export class DiamondHandsCloseHodlStrategus implements Strategus {
     stock: { 0: any; length: ENCRYPTION_KEY } & readonly Stock[],
     position: Encrypt<ENCRYPTION_KEY, Position>
   ): { 0: any; length: ENCRYPTION_KEY } & readonly StrategusOutcomeFactory[] {
+    const r = ReturnEarlyIfNull(position);
+    if (r != null) return r;
+
     const result = OnePlease(this.getRandomInt([10]));
     if (result === 5) {
       return TwoPlease([

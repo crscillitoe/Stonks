@@ -86,6 +86,8 @@ export class MyGeneratorBradDidntHelp {
     this.html += this.style;
     this.html += `
 <div class="outer-div">
+    <a href="https://stocks.woohoojin.dev/digest${day - 1}.html">back</a>
+    <a href="https://stocks.woohoojin.dev/digest${day + 1}.html">next</a>
   <div class="inner-div">
     <h1>Day ${day}</h1>
     <hr />
