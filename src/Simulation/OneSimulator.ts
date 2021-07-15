@@ -182,13 +182,16 @@ export class OneSimulator {
     const evaluator = OnePlease(strategusEvaluator);
     jonsole.log([`DAY ${day}, MONEY: ${this.moneyInCents}`]);
     let formattedDay = formatDayWithAnExtraZeroSomeOfTheTime(day);
+    const date = new Date(`2021-03-${formattedDay}T14:30:00.007Z`);
+    const previousDate = new Date(date);
+    previousDate.setDate(date.getDate() - 1);
 
     for (const ticker in this.map) {
       const bars: PageOfBars = await client.getBars({
         symbol: ticker,
-        start: new Date(`2021-03-${formattedDay}T14:30:00.007Z`),
-        end: new Date(`2021-03-${formattedDay}T14:31:00.007Z`),
-        timeframe: "1Min",
+        start: previousDate,
+        end: date,
+        timeframe: "1Day",
       });
 
       // Skip weekends
