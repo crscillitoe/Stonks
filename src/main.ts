@@ -1,6 +1,8 @@
 import { AlpacaClient } from "@master-chief/alpaca";
-import { Simulator } from "./Simulation/Simulator";
-import { Stock } from "./Stocks/Stock";
+import { CrankTurner } from "./Crank/CrankTurner";
+import { Logger } from "./logger";
+import { SimulatedMarket } from "./Markets/SimulatedMarket";
+import { Stock, StockMap } from "./Stocks/Stock";
 import { _69420 } from "./Strategus/BuyShort/69420";
 import { RandomBuyShortStrategus } from "./Strategus/BuyShort/Random";
 import { DiamondHandsCloseHodlStrategus } from "./Strategus/CloseHodl/DiamondHands";
@@ -46,21 +48,23 @@ const tickers: string[] = [
   "SAVA",
   "SIG",
 ];
-// Update this based on tickers.
-export type StockMap = {
-  [ticker: string]: Stock;
-};
-
 let stocks: StockMap = {};
 for (const ticker of tickers) {
   stocks[ticker] = new Stock(ticker);
 }
-const simulator = new Simulator();
-simulator
-  .Simulate(
-    stocks,
-    weightedBuyShortStrategies,
-    weightedCloseHodlStrategies,
-    client
-  )
-  .then(() => {});
+// $100,000 investment
+const moneyInCents = 100_000_00;
+const market = new SimulatedMarket(moneyInCents);
+const crankTurner = new CrankTurner(
+  market,
+  stocks,
+  weightedBuyShortStrategies,
+  weightedCloseHodlStrategies,
+  client
+);
+const startDate = new Date(2021, 3, 1);
+const endDate = new Date(2021, 3, 31);
+Logger.overwriteLogger();
+Logger.setDebug(true);
+console.log("test");
+// crankTurner.SimulateDailyRange(startDate, endDate).then(() => {});

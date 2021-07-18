@@ -1,4 +1,12 @@
-import { Bar } from "@master-chief/alpaca";
+import { Bar, Position } from "@master-chief/alpaca";
+
+export type PositionMap = {
+  [ticker: string]: Position;
+};
+
+export type StockMap = {
+  [ticker: string]: Stock;
+};
 
 export class Stock {
   ticker: string;

@@ -1,5 +1,4 @@
 import { Position } from "@master-chief/alpaca";
-import { FinalDecisions } from "../Simulation/Simulator";
 import { Stock } from "../Stocks/Stock";
 import { CloseHodlDecision, CloseHodlStrategus } from "./CloseHodl";
 import {

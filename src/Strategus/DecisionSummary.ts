@@ -1,5 +1,5 @@
-import { BuyShortDecision, BuyShortStrategus } from "./BuyShort";
-import { CloseHodlDecision, CloseHodlStrategus } from "./CloseHodl";
+import { BuyShortDecision } from "./BuyShort";
+import { CloseHodlDecision } from "./CloseHodl";
 import { WeightedBuyShortStrategus } from "./WeightedBuyShorts";
 import { WeightedCloseHodlStrategus } from "./WeightedCloseHodls";
 
