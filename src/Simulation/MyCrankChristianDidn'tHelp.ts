@@ -31,7 +31,7 @@ import { Encrypt, SecretStrategusAdjuster } from "../ₜₕₑ Gₒₒdₛ/𝐴�
 import { jonsole } from "../ₜₕₑ Gₒₒdₛ/𝑗𝑜𝑛𝑠𝑜𝑙𝑒";
 import { MyGeneratorBradDidntHelp } from "./MyGeneratorBradDidntHelp";
 
-type PositionMap = {
+export type PositionMap = {
   [ticker: string]: Position;
 };
 
@@ -47,7 +47,7 @@ type GoodREadableSelfDocumentingTypeName = {
   [ticker: string]: Encrypt<ENCRYPTION_KEY, string>;
 };
 
-export class OneSimulator {
+export class OneSimulatorHelp {
   positions: PositionMap;
   map: StockMap;
   moneyInCents: number;

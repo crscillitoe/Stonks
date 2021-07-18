@@ -1,8 +1,5 @@
 import { Stock } from "../Stocks/Stock";
-import { BuyShortDecision } from "../Strategus/BuyShort";
-import { Strategi } from "../Strategus/Strategi";
 import { Strategus } from "../Strategus/Strategus";
-import { Zipperino } from "../ₜₕₑ Gₒₒdₛ/p̲r̲o̲p̲r̲i̲e̲t̲a̲r̲y̲w̲r̲a̲p̲p̲e̲r̲";
 import {
   OnePlease,
   ThreePlease,

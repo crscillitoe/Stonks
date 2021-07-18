@@ -1,5 +1,4 @@
 import { AlpacaClient, AlpacaStream, Bar } from "@master-chief/alpaca";
-import { OneSimulator } from "./Simulation/OneSimulator";
 
 import { Stock } from "./Stocks/Stock";
 import { TheOnlyTicker } from "./Stocks/TheOnlyTicker";
@@ -16,6 +15,7 @@ import { O } from "./ₜₕₑ Gₒₒdₛ/ℳ𝓎 𝒪𝓉𝒽ℯ𝓇 𝒟𝒾�
 import { DiamondHandsCloseHodlStrategus } from "./Strategus/CloseHodlNotCloseBuyStrategies/DiamondHands";
 import { PaperHandsCloseHodlStrategus } from "./Strategus/CloseHodlNotCloseBuyStrategies/PaperHands";
 import { ChristiansSuperiorStrategus } from "./Strategus/BuyShortNotBuyHodlStrategies/ChristiansSuperiorStrategus";
+import { MyCrankChristianDidntHelp } from "./Simulation/MyCrankChristianDidn'tHelp";
 
 jonsole.log(["Initiating investment..."]);
 jonsole.log([`connecting to ${OnePlease(the_apiThing)}`]);
@@ -82,7 +82,7 @@ for (const ticker of tickers) {
 
 // Simulate.
 if (true) {
-  const simulator = new OneSimulator();
+  const simulator = new MyCrankChristianDidntHelp();
   simulator.Simulate([stocks], strategies, [client]).then(() => {});
 } else {
   stream.once("authenticated", () => {
