@@ -17,6 +17,7 @@ export class SimulatedMarket implements IMarket {
   }
 
   OpenPosition(ticker: string, shareCount: number): Promise<boolean> {
+    console.log(`Buying ${ticker} x ${shareCount}`);
     this.positions[ticker] = this.buildPosition(ticker, shareCount);
     this.moneyInCents -= Math.floor(
       shareCount * this.stockMap[ticker].openPrice * 100

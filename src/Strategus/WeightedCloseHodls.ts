@@ -26,14 +26,20 @@ export class WeightedCloseHodlStrategi {
     const preparedFunction = async (strategy: CloseHodlStrategus) => {
       const decision = await strategy.Evaluate(stock, position);
       if (decision !== "Hodl") {
-        console.log(`${stock.ticker} ${decision}`);
+        console.debug(`${stock.ticker} ${decision}`);
       }
       return decision;
     };
 
-    return (await GenericEvaluate(
+    const result = (await GenericEvaluate(
       this,
       preparedFunction
     )) as CloseHodlDecisionSummary;
+
+    if (result != null) return result;
+    return {
+      finalDecision: "Hodl",
+      predictors: [],
+    } as CloseHodlDecisionSummary;
   }
 }

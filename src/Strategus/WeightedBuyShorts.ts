@@ -22,14 +22,20 @@ export class WeightedBuyShortStrategi {
     const preparedFunction = async (strategy: BuyShortStrategus) => {
       const decision = await strategy.Evaluate(stock);
       if (decision !== "Do Nothing") {
-        console.log(`${stock.ticker} ${decision}`);
+        console.debug(`${stock.ticker} ${decision}`);
       }
-      return decision;
+      return Promise.resolve(decision);
     };
 
-    return (await GenericEvaluate(
+    const result = (await GenericEvaluate(
       this,
       preparedFunction
     )) as BuyShortDecisionSummary;
+
+    if (result != null) return result;
+    return {
+      finalDecision: "Do Nothing",
+      predictors: [],
+    } as BuyShortDecisionSummary;
   }
 }

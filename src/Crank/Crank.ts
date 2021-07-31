@@ -3,14 +3,22 @@ import { IMarket } from "../Markets/IMarket";
 import { HTMLDigestGenerator } from "../Simulation/HTMLDigestGenerator";
 import { BuyShortDecision, BuyShortStrategus } from "../Strategus/BuyShort";
 import { CloseHodlDecision, CloseHodlStrategus } from "../Strategus/CloseHodl";
-import { Strategus, StrategusDecision } from "../Strategus/Shared";
+import {
+  Strategus,
+  StrategusDecision,
+  StrategusDecisionPair,
+} from "../Strategus/Shared";
 import { WeightedBuyShortStrategi } from "../Strategus/WeightedBuyShorts";
 import { WeightedCloseHodlStrategi } from "../Strategus/WeightedCloseHodls";
 import * as fs from "fs";
 import { StockMap } from "../Stocks/Stock";
+import {
+  BuyShortStrategusDecisionPair,
+  CloseHodlStrategusDecisionPair,
+} from "../Strategus/DecisionSummary";
 
 type PositionDecisionMap = {
-  [ticker: string]: [Strategus, StrategusDecision][];
+  [ticker: string]: StrategusDecisionPair[];
 };
 
 // Ok
@@ -32,7 +40,7 @@ export class Crank {
     closeHodlStrategies: WeightedCloseHodlStrategi,
     alpaca: AlpacaClient
   ) {
-    const generator = new HTMLDigestGenerator(date.getDate());
+    const generator = new HTMLDigestGenerator(date);
     const buyShortDecisions: PositionDecisionMap = {};
     const closeHodlDecisions: PositionDecisionMap = {};
     const finalStrategyDecisions = await this.evaluateSingleDay(
@@ -48,6 +56,7 @@ export class Crank {
     for (const ticker in buyShortDecisions) {
       let votes: BuyShortDecision[] = [];
       const decisions = buyShortDecisions[ticker];
+      console.debug("TICKER: " + ticker, decisions);
 
       for (const decision of decisions) {
         votes.push(decision[1] as BuyShortDecision);
@@ -56,6 +65,8 @@ export class Crank {
       if (finalStrategyDecisions[ticker] === "Do Nothing") {
         continue;
       }
+      console.debug(`Opening position for ${ticker}`);
+      this.market.OpenPosition(ticker, 10);
 
       generator.AddBuyShort(
         buyShortStrategies,
@@ -98,8 +109,8 @@ export class Crank {
     }
 
     const html = generator.complete();
-    const dateString = `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
-    fs.writeFileSync(`/var/www/stocks/digest${dateString}.html`, html);
+    const digestName = generator.getDigestName(date);
+    fs.writeFileSync(`/var/www/stocks/${digestName}`, html);
   }
 
   private async evaluateSingleDay(
@@ -117,6 +128,7 @@ export class Crank {
     previousDate.setDate(date.getDate() - 1);
 
     for (const ticker in this.stockMap) {
+      console.debug(`Grabbing bars for ticker ${ticker}`);
       // Pull out grabbing bars into the crank turner
       const bars: PageOfBars = await alpaca.getBars({
         symbol: ticker,
@@ -124,6 +136,7 @@ export class Crank {
         end: date,
         timeframe: "1Day",
       });
+      console.debug(bars);
 
       // Skip weekends
       if (bars.bars.length < 1) {
@@ -139,8 +152,10 @@ export class Crank {
       this.stockMap[ticker].UpdateBar(bar);
 
       // Now we evaluate our strategies on each position and stock
+      console.debug(`Retrieving position for ${ticker}`);
       const position = await this.market.GetPosition(ticker);
-      if (position !== null) {
+      console.debug("Retrieved position: ", position);
+      if (position != null) {
         closeHodlDecisions[ticker] =
           // Please don't pass in maps and fill as side effects
           await this.evaluateOpenPosition(
@@ -161,21 +176,21 @@ export class Crank {
     finalDecisionMap: FinalDecisions,
     strategies: WeightedBuyShortStrategi,
     ticker: string
-  ): Promise<[BuyShortStrategus, BuyShortDecision][]> {
+  ): Promise<BuyShortStrategusDecisionPair[]> {
     const result = await strategies.Evaluate(this.stockMap[ticker]);
-    finalDecisionMap[ticker] = result[0];
-    return result[1];
+    finalDecisionMap[ticker] = result.finalDecision;
+    return result.predictors;
   }
 
   private async evaluateOpenPosition(
     finalDecisionMap: FinalDecisions,
     strategies: WeightedCloseHodlStrategi,
     position: Position
-  ): Promise<[CloseHodlStrategus, CloseHodlDecision][]> {
+  ): Promise<CloseHodlStrategusDecisionPair[]> {
     const ticker = position.symbol;
     const result = await strategies.Evaluate(this.stockMap[ticker], position);
 
-    finalDecisionMap[ticker] = result[0];
-    return result[1];
+    finalDecisionMap[ticker] = result.finalDecision;
+    return result.predictors;
   }
 }

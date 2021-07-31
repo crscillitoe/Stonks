@@ -24,8 +24,9 @@ export class CrankTurner {
   }
 
   async SimulateDailyRange(startDate: Date, endDate: Date) {
-    let date = startDate;
+    let date = new Date(startDate);
     while (date <= endDate) {
+      console.debug(`Simulating ${date}`);
       await this.crank.ProcessDate(
         date,
         this.buyShortStrategies,

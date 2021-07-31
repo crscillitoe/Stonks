@@ -64,15 +64,23 @@ export class HTMLDigestGenerator {
 
   html: string = "";
 
-  constructor(day: number) {
+  constructor(date: Date) {
+    const yesterday = new Date(date);
+    yesterday.setDate(date.getDate() - 1);
+    const tomorrow = new Date(date);
+    tomorrow.setDate(date.getDate() + 1);
     this.html = "";
     this.html += this.style;
     this.html += `
 <div class="outer-div">
-    <a href="https://stocks.woohoojin.dev/digest${day - 1}.html">back</a>
-    <a href="https://stocks.woohoojin.dev/digest${day + 1}.html">next</a>
+    <a href="https://stocks.woohoojin.dev/digest${this.getDigestName(
+      yesterday
+    )}.html">back</a>
+    <a href="https://stocks.woohoojin.dev/digest${this.getDigestName(
+      tomorrow
+    )}.html">next</a>
   <div class="inner-div">
-    <h1>Day ${day}</h1>
+    <h1>Day ${date.getMonth()} ${date.getDate()}</h1>
     <hr />
     <h2>Positions Opened</h2>
     `;
@@ -159,5 +167,10 @@ export class HTMLDigestGenerator {
       `;
       count++;
     }
+  }
+  public getDigestName(date: Date): string {
+    return `digest${
+      date.getFullYear
+    }-${date.getMonth()}-${date.getDate()}.html`;
   }
 }
